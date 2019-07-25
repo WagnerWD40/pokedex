@@ -1,0 +1,123 @@
+
+body {
+	margin-top: 10px;
+	background: white;
+	
+}
+
+
+.container {
+	background: #D43438;
+	padding-top: 20px;
+	border-top: 0; 
+	border-right: 10px solid #A63234;
+	border-left: 0;
+	border-bottom: 10px solid #A63234;
+	border-radius: 25px;
+	height: 600px;
+	width: 1250px;
+}
+
+#pokepic {
+	width: 220px;
+	height: 220px;
+	margin: 20px 80px;
+}
+
+.backblue {
+	background-color: #D2EDF8;
+	box-shadow: 5px 5px rgba(50, 50, 50, 0.2), 5px 5px white inset;
+	border-radius: 18px;
+	border-top: 5px solid black;
+	border-left: 8px solid black;
+	border-right: 8px solid black;
+	border-bottom: 5px solid black;
+	margin: 5px 45px;
+}
+
+.tri-button {
+	width: 100px;
+	height: 100px;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.centeredtext {
+	text-align: center;
+}
+
+.nobackcol {
+	margin-left: auto;
+	margin-right: auto;
+	margin: 5px 45px;
+}
+
+#info {
+	border-bottom: 2px solid white;
+}
+
+table {
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	border-radius: 18px;
+}
+
+.stats {
+	width: 30px;
+	padding-left: 10px;
+}
+
+.statnumber {
+	text-align: right;
+}
+
+.progress {
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
+#type_tab {
+	background-color: white;
+	border-radius: 18px;
+	margin-bottom: 20px;
+	height: 100px;
+}
+
+#abilities_tab {
+	background-color: white;
+	border-radius: 18px;
+	margin-bottom: 20px;
+	height: 155px;
+}
+
+#poke_title {
+	text-align: right;
+}
+
+#poke_type1, #poke_type2 {
+	font-size: xx-large;
+	background-color: black;
+	color: white;
+	text-shadow: 2px 2px rgba(30, 30, 30, 0.3);
+	box-shadow: 2px 2px rgba(30, 30, 30, 0.3);
+}
+
+#search_box {
+	width: 350px;
+	background: none;
+	border: none;
+	outline: none;
+	border-radius: 10px;
+}
+
+.btn {
+	background: black;
+	color: white;
+	box-shadow: 2px 2px rgba(50, 50, 50, 1), 2px 2px white inset;         
+	border-radius: 15px;
+}

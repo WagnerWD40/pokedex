@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PokeDex</title>
+
+	<script type="text/javascript" src="\js\jquery.js"></script>
+	<script type="text/javascript" src="\js\jquery-ui.js"></script>
+	<script type="text/javascript" src="\js\bootstrap.bundle.js"></script>
+	<script type="text/javascript" src="/eel.js"></script>
+	<script type="text/javascript" src="\js\main.js"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="\style\jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="\style\bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="\style\main.css">
+   
+   
+</head>
+<body>
+	<div class="container">
+		<div class="row">  
+			<div class="col"> <!-- Left Column. -->
+				<div class="row"> <!-- First Left Row. -->
+					<div class="col backblue">
+						<h2 id="poke_name" class="centeredtext"></h2>
+					</div>
+				</div>
+				<div class="row backblue"> <!-- Second Left Row. -->
+					<div class="col">
+						<img id="pokepic" src="\imgs\Bulbasaur.png">
+					</div>
+				</div>
+
+				<div class="row backblue"> <!-- Third Left Row. -->
+					<div class="col-2 numbercol">
+						<h3 id="poke_number"></h3>
+					</div>
+					<div class="col-10">
+						<h3 id="poke_title"></h3>
+					</div>					
+				</div>
+
+				<!-- Search -->
+				<div class="row"> <!-- Forth Left Row. -->
+					<div class="col backblue">
+						
+						<form name="search" action="" onsubmit="return false;">
+						  	<div>
+						    	
+						    	<input id="search_box" type="text"  placeholder="Search by name" name="search_name" onsubmit="return false;">
+						    	<button id="myBtn" class="btn" onclick="dexSearch();">Search</button>
+						    	
+						  	</div>
+						</form>
+						
+					</div>
+				</div>
+				<div class="row"> <!-- Fifty Left Row. -->
+					<div class="col">
+						<div class="row">
+							<div class="col-3"></div>
+							<div class="col-2">
+								<img onclick="dexRotate('Left')" id='left_button' class="tri-button" src="button.png">
+							</div>
+							<div class="col-1"></div>
+							<div class="col-2">
+								<img onclick="dexRotate('Right');" id='right_button' class="tri-button" src="button-r.png">
+							</div>
+							<div class="col-3"></div>
+						</div>
+					</div>
+				</div>								
+			</div>
+			<div class="col"> <!-- Left Column. -->
+				<div class="row"> <!-- First Right Row. -->
+					<div class="col backblue">
+						<h3 id="info" class="centeredtext">Info</h3>
+
+						<!-- Type -->
+						<div id="type_tab">
+ 							<div id="type" class="row justify-content-md-center">
+								<h6 class="centeredtext">Type</h6>
+							</div>
+							<div class="d-flex justify-content-center flex-row">
+							  	<div class="p-2">
+									<span class="badge badge-pill" id="poke_type1"></span>
+							  	</div>
+							  	<div class="p-2">
+									<span class="badge badge-pill" id="poke_type2"></span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Abilities -->
+ 						<div id="abilities_tab">
+							<div id="type" class="row justify-content-md-center">
+								<h6 class="centeredtext">
+									Abilities
+								</h6>
+							</div>						
+
+							<div class="d-flex justify-content-center flex-row">
+								
+							  	<div class="p-2">
+									<h4 id="poke_ability1" data-toggle="tooltip" data-placement="top" data-original-title="Tooltip on top">
+										
+									</h4>				
+								
+						  	  	</div>
+							  	<div class="p-2">
+									<h4 id="poke_ability2" data-toggle="tooltip" data-placement="top" data-original-title="Tooltip on top">
+										
+									</h4>						  	
+							  	</div>
+						  
+							</div>	
+							<div id="type" class="row justify-content-md-center">
+								<h6 class="centeredtext">
+									Hidden Abilities
+								</h6>
+							</div>						
+							<div class="d-flex justify-content-center flex-row">
+							  	<div class="p-2">
+									<h4 id="poke_hidden_ability1" data-toggle="tooltip" data-placement="top" data-original-title="Tooltip on top">
+										
+									</h4>						  	
+							  	</div>
+							  	<div class="p-2">
+									<h4 id="poke_hidden_ability2" data-toggle="tooltip" data-placement="top" data-original-title="Tooltip on top">
+										
+									</h4>						  	
+							  	</div>
+						  
+							</div>								
+						</div>
+
+						<!-- Stats -->
+						<table>	
+							<tr>
+								<td class="stats font-weight-bold">HP</td>
+								<td id="poke_hp" class="stats statnumber font-weight-bold"></td>
+								<td>
+									<div class="progress">
+									  <div id="poke_hp_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 45/255)"></div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="stats font-weight-bold">Attack</td>
+								<td id="poke_attack" class="stats statnumber font-weight-bold"></td>
+								<td>
+									<div class="progress">
+									  <div id="poke_attack_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
+									</div>									
+								</td>
+							</tr>
+							<tr>
+								<td class="stats font-weight-bold">Defense</td>
+								<td id="poke_defense" class="stats statnumber font-weight-bold"></td>
+								<td>
+									<div class="progress">
+									  <div id="poke_defense_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
+									</div>									
+								</td>
+							</tr>
+							<tr>
+								<td class="stats font-weight-bold">Sp.Attack</td>
+								<td id="poke_spattack" class="stats statnumber font-weight-bold"></td>
+								<td>
+									<div class="progress">
+									  <div id="poke_spattack_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
+									</div>									
+								</td>
+							</tr>
+							<tr>
+								<td class="stats font-weight-bold">Sp.Defense</td>
+								<td id="poke_spdefense" class="stats statnumber font-weight-bold"></td>
+								<td>
+									<div class="progress">
+									  <div id="poke_spdefense_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
+									</div>									
+								</td>
+							</tr>
+							<tr>
+								<td class="stats font-weight-bold">Speed</td>
+								<td id="poke_speed" class="stats statnumber font-weight-bold"></td>
+								<td>
+									<div class="progress">
+									  <div id="poke_speed_bar" class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 45/255)"></div>
+									</div>									
+								</td>
+							</tr>
+							<tr>
+								<td class="stats font-weight-bold">Total</td>
+								<td id="poke_total" class="stats statnumber font-weight-bold"></td>
+								<td></td>
+							</tr>
+
+						</table>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
