@@ -123,7 +123,8 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
         pokemon_database[pokemon]['Hidden Abilities'] = hidden_abilities
 
         if mega_abilities or pokemon == 'Latios' or pokemon == 'Latias':
-            pokemon_database[pokemon]['Mega Type'] = [types[2]]
+            if types[2] != 'Unknown':
+                pokemon_database[pokemon]['Mega Type'] = [types[2]]
             if types[3] != 'Unknown':
                 pokemon_database[pokemon]['Mega Type'].append(types[3])
             pokemon_database[pokemon]['Mega Abilities'] = mega_abilities
@@ -137,7 +138,8 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
             pokemon_database[pokemon]['Mega Stats']['Total'] = stats[13]
 
         if alolan_abilities:
-            pokemon_database[pokemon]['Alolan Type'] = [types[2]]
+            if types[2] != 'Unknown':
+                pokemon_database[pokemon]['Alolan Type'] = [types[2]]
             if types[3] != 'Unknown':
                 pokemon_database[pokemon]['Alolan Type'].append(types[3])
             pokemon_database[pokemon]['Alolan Abilities'] = alolan_abilities
@@ -174,7 +176,8 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
                 form_label = 'Alt Form ' + str(form_number) + ' Stats'
                 pokemon_database[pokemon][form_label] = {}
                 pokemon_database[pokemon][form_label]['Form Name'] = form_names[-form_name_index]
-                pokemon_database[pokemon][form_label]['Form Type'] = [types[form_number * 2]]
+                if types[form_number * 2] != 'Unknown':
+                    pokemon_database[pokemon][form_label]['Form Type'] = [types[form_number * 2]]
                 if types[(form_number * 2) + 1] != 'Unknown':
                     pokemon_database[pokemon][form_label]['Form Type'].append(types[(form_number * 2) + 1])
                 pokemon_database[pokemon][form_label]['HP'] = stats[form_start_index]
