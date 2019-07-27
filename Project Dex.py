@@ -10,6 +10,7 @@ pokemon_names_url = 'https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mo
 page = requests.get(pokemon_names_url)
 
 soup = BeautifulSoup(page.text, 'html.parser')
+page.close()
 raw_data = soup.find_all(style='background:#FFF;')
 names = re.compile(r'<a href="/wiki/(.+)_\(Pok%C3%A9mon\)')
 
@@ -19,8 +20,8 @@ for item in raw_data:
     if data:
         POKEMON_NAMES.append(data.group(1))
 
-print(POKEMON_NAMES)
-print(len(POKEMON_NAMES))
+#print(POKEMON_NAMES)
+#print(len(POKEMON_NAMES))
 
 # Searching stats
 for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
@@ -32,7 +33,7 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
     page.close()
     correct_name = soup.find(id="firstHeading")
     pokemon = correct_name.string[:-10]
-    print(pokemon)
+    print(pokemon) ########################
 
     # IMG DOWNLOADER
     img = soup.find(alt=pokemon)
@@ -72,6 +73,7 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
 
         # Retrieves the type(grass, poison, etc)
         table_type = soup.find_all(style="color:#FFF;")
+        types = [poke_type.string for poke_type in table_type]
         pokemon_database[pokemon]['Type'] = []
         pokemon_database[pokemon]['Type'].append(table_type[0].string)
         if table_type[1].string != 'Unknown':
@@ -105,22 +107,25 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
                 elif item.small.string == pokemon:
                     abilities.append(item.span.string)
                 elif item.small.string:
-                    if item.small.string.endswith('Hidden Ability'):
+                    if all([item.small.string.startswith('Alolan'),
+                            item.small.string.endswith('Hidden Ability')]):
+                        alolan_hidden_abilities.append(item.span.string)
+                    elif item.small.string.endswith('Hidden Ability'):
                         hidden_abilities.append(item.span.string)
                     elif item.small.string.startswith('Mega'):
                         mega_abilities.append(item.span.string)
-                    elif all([item.small.string.startswith('Alolan'),
-                        item.small.string.endswith('Hidden Ability')]):
-                        alolan_hidden_abilities.append(item.span.string)
                     elif item.small.string.startswith('Alolan'):
                         alolan_abilities.append(item.span.string)
 
-        print(stats)
+        #print(stats) ###############################
 
         pokemon_database[pokemon]['Abilities'] = abilities
         pokemon_database[pokemon]['Hidden Abilities'] = hidden_abilities
 
-        if mega_abilities:
+        if mega_abilities or pokemon == 'Latios' or pokemon == 'Latias':
+            pokemon_database[pokemon]['Mega Type'] = [types[2]]
+            if types[3] != 'Unknown':
+                pokemon_database[pokemon]['Mega Type'].append(types[3])
             pokemon_database[pokemon]['Mega Abilities'] = mega_abilities
             pokemon_database[pokemon]['Mega Stats'] = {}
             pokemon_database[pokemon]['Mega Stats']['HP'] = stats[7]
@@ -132,6 +137,9 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
             pokemon_database[pokemon]['Mega Stats']['Total'] = stats[13]
 
         if alolan_abilities:
+            pokemon_database[pokemon]['Alolan Type'] = [types[2]]
+            if types[3] != 'Unknown':
+                pokemon_database[pokemon]['Alolan Type'].append(types[3])
             pokemon_database[pokemon]['Alolan Abilities'] = alolan_abilities
             pokemon_database[pokemon]['Alolan Stats'] = {}
             if len(stats) > 7:
@@ -155,12 +163,20 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
 
         if len(stats) > 7 and not mega_abilities and not alolan_abilities:  # pokemon has alternative forms
             alt_forms = (len(stats) // 7) - 1  # 7 stats for each form, minus the base form
+            h5 = soup.findAll('h5')
+            form_names = [form.string for form in h5]
+            form_name_index = alt_forms
+            #print(form_names)       ##########################
 
             for form in range(alt_forms):
                 form_number = form + 1
                 form_start_index = 7 * form_number
                 form_label = 'Alt Form ' + str(form_number) + ' Stats'
                 pokemon_database[pokemon][form_label] = {}
+                pokemon_database[pokemon][form_label]['Form Name'] = form_names[-form_name_index]
+                pokemon_database[pokemon][form_label]['Form Type'] = [types[form_number * 2]]
+                if types[(form_number * 2) + 1] != 'Unknown':
+                    pokemon_database[pokemon][form_label]['Form Type'].append(types[(form_number * 2) + 1])
                 pokemon_database[pokemon][form_label]['HP'] = stats[form_start_index]
                 pokemon_database[pokemon][form_label]['Attack'] = stats[form_start_index + 1]
                 pokemon_database[pokemon][form_label]['Defense'] = stats[form_start_index + 2]
@@ -168,6 +184,7 @@ for index, pokemon_url in enumerate(POKEMON_NAMES):  # SLICING FOR TEST
                 pokemon_database[pokemon][form_label]['Sp. Defense'] = stats[form_start_index + 4]
                 pokemon_database[pokemon][form_label]['Speed'] = stats[form_start_index + 5]
                 pokemon_database[pokemon][form_label]['Total'] = stats[form_start_index + 6]
+                form_name_index -= 1
 
 
 
@@ -188,4 +205,5 @@ with open('pokemon_db_test.py', 'w', encoding="utf-8") as file:
     for key in sorted(pokemon_database.keys()):
         file.write('"' + key + '":' + str(pokemon_database[key]) + ',\n')
     file.write('}')
+
 
