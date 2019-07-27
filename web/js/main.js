@@ -64,8 +64,11 @@ function changeData(number) {
 				poke_name = 'Alolan ' + value[0];
 				poke_type = value[1]['Alolan Type'];
 				poke_abilities = value[1]['Alolan Abilities'];
-				poke_hidden_abilities = value[1]['Alolan Hidden Abilities'];
 				poke_stats = value[1]['Alolan Stats'];
+				if (value[1]['Alolan Hidden Abilities']) { 
+					poke_hidden_abilities = value[1]['Alolan Hidden Abilities'];
+				}
+								
 			} else if (alt_forms_checker) {
 				poke_name = value[0] + '/' + value[1]['Alt Form 1 Stats']['Form Name'];
 				if (value[1]['Alt Form 1 Stats']['Form Type']) {
@@ -240,9 +243,11 @@ function checkKey(e) {
 
     if (e.keyCode == '38') {
         // up arrow
+        changeMega();
     }
     else if (e.keyCode == '40') {
         // down arrow
+        changeForms();
     }
     else if (e.keyCode == '37') {
        // left arrow
