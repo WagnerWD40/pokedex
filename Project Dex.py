@@ -20,7 +20,7 @@ for item in raw_data:
     if data:
         POKEMON_NAMES.append(data.group(1))
 
-#print(POKEMON_NAMES)
+print(POKEMON_NAMES)
 #print(len(POKEMON_NAMES))
 
 # Searching stats

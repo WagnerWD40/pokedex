@@ -41,7 +41,6 @@ def search_ability(ability):
 
 eel.start('main.html', size=(1250, 650), mode='chrome-app')
 
-# TODO Pokemon with multiple forms
 # TODO Attack Dex
 # TODO Image transitions
 # TODO Pokedex text entries
