@@ -11,7 +11,7 @@ function changeData(number) {
 		let poke_abilities = value[1]['Abilities'];
 		let poke_hidden_abilities = value[1]['Hidden Abilities'];
 		let poke_stats = value[1]['Stats'];
-		
+
 		//Mega
 		//Checks if pokemon has Mega 
 		if (value[1]['Mega Stats']) {
@@ -24,9 +24,25 @@ function changeData(number) {
 			document.getElementById("megaBtn").style.color = "black";			
 		}
 		
+		//Special case for Y Megas
+
+		if (mega_two) {
+			poke_name = 'Mega ' + value[0] + ' Y';
+			poke_type = value[1]['Mega 2 Type'];
+			poke_abilities = value[1]['Mega 2 Abilities'];
+			poke_hidden_abilities = '';
+			poke_stats = value[1]['Mega 2 Stats'];			
+
+		}
+
+
 		//Change stats to/from Mega
-		if (mega) {
+		if (mega && !mega_two) {
 			poke_name = 'Mega ' + value[0];
+
+			if (poke_name === 'Mega Charizard' || poke_name === 'Mega Mewtwo') {
+				poke_name += ' X'
+			}
 
 			if (value[1]['Mega Type']) {
 				if (value[1]['Mega Type'][0] != 'Unknown') {
@@ -37,7 +53,7 @@ function changeData(number) {
 			poke_abilities = value[1]['Mega Abilities'];
 			poke_hidden_abilities = '';
 			poke_stats = value[1]['Mega Stats'];
-		}
+		} 
 
 		//Alternative Forms
 		//Checks if pokemon has Alternative Forms
@@ -68,26 +84,24 @@ function changeData(number) {
 				if (value[1]['Alolan Hidden Abilities']) { 
 					poke_hidden_abilities = value[1]['Alolan Hidden Abilities'];
 				}
-								
+
 			} else if (alt_forms_checker) {
-				poke_name = value[0] + '/' + value[1]['Alt Form 1 Stats']['Form Name'];
-				if (value[1]['Alt Form 1 Stats']['Form Type']) {
-					poke_type = value[1]['Alt Form 1 Stats']['Form Type'];
+				poke_name = value[0] + '/' + value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Name'];
+				if (value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Type']) {
+					poke_type = value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Type'];
 				}
 
-				if (value[1]['Alt Form 1 Stats']['Form Abilities']) {
-					poke_abilities = value[1]['Alt Form 1 Stats']['Form Abilities'];
+				if (value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Abilities']) {
+					poke_abilities = value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Abilities'];
 				}
 
-				if (value[1]['Alt Form 1 Stats']['Form Hidden Abilities']) {
-					poke_hidden_abilities = value[1]['Alt Form 1 Stats']['Form Hidden Abilities'];
+				if (value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Hidden Abilities']) {
+					poke_hidden_abilities = value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Hidden Abilities'];
 				}
 
-				poke_stats = value[1]['Alt Form 1 Stats'];				
-
+				poke_stats = value[1]['Alt Form ' + String(form_number) + ' Stats'];
 			}
 		}
-
 
 		//Details
 		document.getElementById("poke_name").innerHTML = poke_name;
@@ -106,11 +120,15 @@ function changeData(number) {
 			document.getElementById("pokepic").src = ".\\imgs\\" + poke_name.slice(5) + "-Mega" + ".png";
 		}
 
+		if (mega_two) {
+			document.getElementById("pokepic").src = ".\\imgs\\" + poke_name.slice(5) + "-Mega Y" + ".png";
+		}
+
 		if (forms) {
 			if (alola_checker) {
 				document.getElementById("pokepic").src = ".\\imgs\\" + value[0] + "-Alola" + ".png";		
 			} else if (alt_forms_checker) {
-				document.getElementById("pokepic").src = ".\\imgs\\" + value[0] + "-" + value[1]['Alt Form 1 Stats']['Form Name'] + ".png";
+				document.getElementById("pokepic").src = ".\\imgs\\" + value[0] + "-" + value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Name'] + ".png";
 			}
 
 		}
@@ -187,12 +205,25 @@ function changeData(number) {
 		document.getElementById("poke_spattack_bar").style = `width: calc(100% * ${Number(poke_stats['Sp. Attack'])}/${statBarMax})`;
 		document.getElementById("poke_spdefense_bar").style = `width: calc(100% * ${Number(poke_stats['Sp. Defense'])}/${statBarMax})`;
 		document.getElementById("poke_speed_bar").style = `width: calc(100% * ${Number(poke_stats['Speed'])}/${statBarMax})`;
+
+		if (value[1]['Alt Form ' + String(form_number + 1) + ' Stats']) {
+			next_form_flag = true;
+		} else {
+			next_form_flag = false;
+		}
+
+		if (charizard_mewtwo) {
+			mega_two = true;
+		}		
 	});
 }
 
 function dexSearch() {
 	mega = false;
 	forms = false;	
+	mega_two = false;
+	charizard_mewtwo = false;	
+	
 	let name_search = document.forms["search"]["search_name"];
 	let pokemon_number = eel.search_by_name(name_search.value)();
 
@@ -208,6 +239,8 @@ function dexSearch() {
 function dexRotate(direction) {
 	mega = false;
 	forms = false;	
+	mega_two = false;
+	charizard_mewtwo = false;
 	let number;
 	let button;
 
@@ -274,8 +307,21 @@ function changeMega() {
 	if (!mega && mega_checker) {
 		mega = true;
 		changeData(active_pokemon);
+	} else if (mega && !mega_two && active_pokemon == 6) {
+		mega = true;
+		mega_two = true;
+		changeData(active_pokemon);
+	} else if (mega && !mega_two && active_pokemon == 150) {
+		mega = true;
+		mega_two = true;
+		changeData(active_pokemon);
+	} else if (mega && mega_two) {
+		mega = false;
+		mega_two = false;
+		changeData(active_pokemon);
 	} else {
 		mega = false;
+		mega_two = false;
 		changeData(active_pokemon);
 	}
 }
@@ -284,7 +330,11 @@ function changeForms() {
 	if (!forms && forms_checker) {
 		forms = true;
 		changeData(active_pokemon);
+	} else if (forms && next_form_flag) {
+		form_number += 1;
+		changeData(active_pokemon);
 	} else {
+		form_number = 1;
 		forms = false;
 		changeData(active_pokemon);
 	}
@@ -297,7 +347,10 @@ let mega = false;			//flag for active form in screen
 let forms_checker = false; 	 //flag to check if pokemon has a alt forms
 let forms = false;			//flag for active form in screen
 let alt_forms_checker = false;	//flag to check if the form is a transformation
+let form_number = 1;			//sets active form for alternate forms
+let next_form_flag = false;		//checks if next form is valid
 let alola_checker = false;		//flag to check if the form is Alolan
+let mega_two = false;			//band-aid for the Y megas			
 let active_pokemon = 1;
 
 changeData(active_pokemon);
