@@ -51,3 +51,5 @@ eel.start('main.html', size=(1250, 720), mode='chrome-app', options={'chromeFlag
 
 # TODO Attack Dex
 # TODO Image transitions
+# TODO Colors of stats bars
+# TODO Min-Max stats as tooltips(maybe)
