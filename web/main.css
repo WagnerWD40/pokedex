@@ -1,10 +1,7 @@
-
 body {
 	margin-top: 10px;
 	background: white;
-	
 }
-
 
 .container {
 	background: #D43438;
@@ -14,8 +11,8 @@ body {
 	border-left: 0;
 	border-bottom: 10px solid #A63234;
 	border-radius: 25px;
-	height: 600px;
-	width: 1250px;
+	height: 670px;
+	width: 1100px;
 }
 
 #pokepic {
@@ -108,7 +105,7 @@ table {
 }
 
 #search_box {
-	width: 350px;
+	width: 310px;
 	background: none;
 	border: none;
 	outline: none;
@@ -121,4 +118,3 @@ table {
 	box-shadow: 2px 2px rgba(50, 50, 50, 1), 2px 2px white inset;         
 	border-radius: 15px;
 }
-

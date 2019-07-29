@@ -12,6 +12,8 @@ function changeData(number) {
 		let poke_hidden_abilities = value[1]['Hidden Abilities'];
 		let poke_stats = value[1]['Stats'];
 
+		pokemonEntry(poke_name);
+
 		//Mega
 		//Checks if pokemon has Mega 
 		if (value[1]['Mega Stats']) {
@@ -211,18 +213,14 @@ function changeData(number) {
 		} else {
 			next_form_flag = false;
 		}
-
-		if (charizard_mewtwo) {
-			mega_two = true;
-		}		
 	});
+
 }
 
 function dexSearch() {
 	mega = false;
 	forms = false;	
 	mega_two = false;
-	charizard_mewtwo = false;	
 	
 	let name_search = document.forms["search"]["search_name"];
 	let pokemon_number = eel.search_by_name(name_search.value)();
@@ -340,6 +338,24 @@ function changeForms() {
 	}
 }
 
+function pokemonEntry(poke_name) {
+	let entry = eel.search_pokedex_entry(poke_name)();
+	entry.then(data => document.getElementById("dex_entry").innerHTML = data);
+}
+
+function showHide() {
+	let state = document.getElementById('info_tab').style.display;
+	if (state != 'none') {
+		document.getElementById('info_tab').style.display = "none"
+		document.getElementById('moveset_tab').style.display = "block"
+	} else {
+		document.getElementById('info_tab').style.display = "block"
+		document.getElementById('moveset_tab').style.display = "none"
+	}
+	
+	
+}
+
 document.onkeydown = checkKey;
 
 let mega_checker = false; 	 //flag to check if pokemon has a mega form
@@ -378,7 +394,7 @@ const type_colors = {
 }
 
 
-  $( function() {
+$( function() {
     var pokemon_list = ['Abomasnow', 'Abra', 'Absol', 'Accelgor', 'Aegislash', 'Aerodactyl', 
     'Aggron', 'Aipom', 'Alakazam', 'Alcremie', 'Alomomola', 'Altaria', 'Amaura', 'Ambipom', 
     'Amoonguss', 'Ampharos', 'Anorith', 'Araquanid', 'Arbok', 'Arcanine', 'Arceus', 'Archen', 
@@ -409,7 +425,7 @@ const type_colors = {
     'Electivire', 'Electrike', 'Electrode', 'Elekid', 'Elgyem', 'Emboar', 'Emolga', 'Empoleon', 
     'Entei', 'Escavalier', 'Espeon', 'Espurr', 'Excadrill', 'Exeggcute', 'Exeggutor', 'Exploud', 
     'Farfetch%27d', 'Fearow', 'Feebas', 'Fennekin', 'Feraligatr', 'Ferroseed', 'Ferrothorn', 
-    'Finneon', 'Flaaffy', 'Flab%C3%A9b%C3%A9', 'Flareon', 'Fletchinder', 'Fletchling', 
+    'Finneon', 'Flaaffy', 'Flareon', 'Fletchinder', 'Fletchling', 
     'Floatzel', 'Floette', 'Florges', 'Flygon', 'Fomantis', 'Foongus', 'Forretress', 'Fraxure', 
     'Frillish', 'Froakie', 'Frogadier', 'Froslass', 'Furfrou', 'Furret', 'Gabite', 'Gallade', 
     'Galvantula', 'Garbodor', 'Garchomp', 'Gardevoir', 'Gastly', 'Gastrodon', 'Genesect', 
@@ -491,4 +507,7 @@ const type_colors = {
     $( "#search_box" ).autocomplete({
       source: pokemon_list
     });
-  } );
+});
+
+
+

@@ -1,10 +1,7 @@
-
 body {
 	margin-top: 10px;
 	background: white;
-	
 }
-
 
 .container {
 	background: #D43438;
@@ -14,14 +11,19 @@ body {
 	border-left: 0;
 	border-bottom: 10px solid #A63234;
 	border-radius: 25px;
-	height: 600px;
-	width: 1250px;
+	height: 100%;
+	width: 100%;
 }
 
 #pokepic {
 	width: 220px;
 	height: 220px;
 	margin: 20px 80px;
+}
+
+#pokepick-container {
+	width: 220px;
+	height: 250px;
 }
 
 .backblue {
@@ -32,7 +34,16 @@ body {
 	border-left: 8px solid black;
 	border-right: 8px solid black;
 	border-bottom: 5px solid black;
-	margin: 5px 45px;
+	margin: 5px 40px;
+}
+
+#right_col {
+	width: 400px;
+	height: 550px;
+}
+
+#moveset_tab {
+	display: none;
 }
 
 .tri-button {
@@ -108,7 +119,7 @@ table {
 }
 
 #search_box {
-	width: 350px;
+	width: 330px;
 	background: none;
 	border: none;
 	outline: none;
@@ -120,5 +131,52 @@ table {
 	color: white;
 	box-shadow: 2px 2px rgba(50, 50, 50, 1), 2px 2px white inset;         
 	border-radius: 15px;
+}
+
+#dex_entry {
+	font-size: 1em;
+	font-weight: 600;
+}
+
+.ui-autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    display: none;
+    min-width: 160px;   
+    padding: 4px 0;
+    margin: 0 0 10px 25px;
+    list-style: none;
+    background-color: #D2EDF8;
+    border-color: #ccc;
+    border-color: rgba(0, 0, 0, 0.8);
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+}
+
+.ui-menu-item > a.ui-corner-all {
+    display: block;
+    padding: 3px 15px;
+    clear: both;
+    font-weight: normal;
+    line-height: 18px;
+    color: #555555;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.ui-state-hover, .ui-state-active {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #0088cc;
+    border-radius: 0px;
+    background-image: none;
 }
 

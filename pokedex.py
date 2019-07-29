@@ -1,7 +1,9 @@
 # -*- coding: ISO-8859-1 -*-
 import pokemon_db as db
+import pokedex_entries_db as entries_db
 import abilities_db as a_db
 import eel
+from random import choice
 
 eel.init('web', allowed_extensions=['.js', '.html', '.css'])
 
@@ -39,9 +41,13 @@ def search_ability(ability):
         return a_db.abilities_database[ability]
 
 
-eel.start('main.html', size=(1250, 650), mode='chrome-app')
+@eel.expose
+def search_pokedex_entry(pokemon_name):
+    if pokemon_name in entries_db.pokedex_entries_db.keys():
+        return choice(entries_db.pokedex_entries_db[pokemon_name])
+
+
+eel.start('main.html', size=(1250, 720), mode='chrome-app', options={'chromeFlags': ['--disable-http-cache']})
 
 # TODO Attack Dex
 # TODO Image transitions
-# TODO Pokedex text entries
-

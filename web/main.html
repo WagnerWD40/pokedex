@@ -13,7 +13,7 @@
 
 	<link rel="stylesheet" type="text/css" href="\style\jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="\style\bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="\style\main.css">
+	<link rel="stylesheet" type="text/css" href="\style\main.css?<?php echo date('l jS \of F Y h:i:s A'); ?>">
    
    
 </head>
@@ -21,14 +21,14 @@
 	<div class="container">
 		<div class="row">  
 			<div class="col"> <!-- Left Column. -->
-				<div class="row"> <!-- First Left Row. -->
+				<div class="d-flex flex-row"> <!-- First Left Row. -->
 					<div class="col backblue">
 						<h2 id="poke_name" class="centeredtext"></h2>
 					</div>
 				</div>
-				<div class="row backblue"> <!-- Second Left Row. -->
-					<div class="col">
-						<img id="pokepic" src="\imgs\Bulbasaur.png">
+				<div class="d-flex  backblue"> <!-- Second Left Row. -->
+					<div id="pokepick-container" class="col">
+						<img id="pokepic"  src="\imgs\Bulbasaur.png">
 					</div>
 				</div>
 
@@ -42,7 +42,7 @@
 				</div>
 
 				<!-- Search -->
-				<div class="row"> <!-- Forth Left Row. -->
+				<div class="d-flex flex-row"> <!-- Forth Left Row. -->
 					<div class="col backblue">
 						
 						<form name="search" action="" onsubmit="return false;">
@@ -56,44 +56,33 @@
 						
 					</div>
 				</div>
-<!-- 				<div class="row"> --> <!-- Fifty Left Row. -->
-<!-- 					<div class="col">
-						<div class="row">
-							<div class="col-3"></div>
-							<div class="col-2">
-								<img onclick="dexRotate('Left')" id='left_button' class="tri-button" src="button.png">
-							</div>
-							<div class="col-1"></div>
-							<div class="col-2">
-								<img onclick="dexRotate('Right');" id='right_button' class="tri-button" src="button-r.png">
-							</div>
-							<div class="col-3"></div>
+				<div >
+					<div class="d-flex backblue flex-row entry-scroll-text">
+						<marquee id="dex_entry" behavior="scroll" direction="left" scrollamount="8"></marquee>
+
+					</div>
+					<div class="d-flex justify-content-center flex-row">
+					  	<div class="p-2">
+				    		<button id="megaBtn" class="btn btn-mega-forms" onclick="changeMega();">MEGA</button>		  		
+				  		</div>
+					  	<div class="p-2">
+							<img onclick="dexRotate('Left');" id='left_button' class="tri-button" src="button.png">								
+					  	</div>
+					  	<div class="p-2">
+							<img onclick="dexRotate('Right');" id='right_button' class="tri-button" src="button-r.png">								
 						</div>
-					</div> -->
-						<div >
- 							<div class="row justify-content-md-center">
-							
-							</div>
-							<div class="d-flex justify-content-center flex-row">
-							  	<div class="p-2">
-						    		<button id="megaBtn" class="btn btn-mega-forms" onclick="changeMega();">MEGA</button>		  		
-						  		</div>
-							  	<div class="p-2">
-									<img onclick="dexRotate('Left');" id='left_button' class="tri-button" src="button.png">								
-							  	</div>
-							  	<div class="p-2">
-									<img onclick="dexRotate('Right');" id='right_button' class="tri-button" src="button-r.png">								
-								</div>
-							  	<div class="p-2">
-						    		<button id="formsBtn" class="btn btn-mega-forms" onclick="changeForms();">FORMS</button>								  		
-						  		</div>
-							</div>
-						</div>			
-				<!-- </div> -->								
+					  	<div class="p-2">
+				    		<button id="formsBtn" class="btn btn-mega-forms" onclick="changeForms();">FORMS</button>								  		
+				  		</div>
+				  		
+					</div>
+
+				</div>			
 			</div>
-			<div class="col"> <!-- Left Column. -->
+			<div class="col"> <!-- Right Column. -->
 				<div class="row"> <!-- First Right Row. -->
-					<div class="col backblue">
+					<div id="right_col" class="col backblue">
+						<div id="info_tab">
 						<h3 id="info" class="centeredtext">Info</h3>
 
 						<!-- Type -->
@@ -155,73 +144,87 @@
 						</div>
 
 						<!-- Stats -->
-						<table>	
-							<tr>
-								<td class="stats font-weight-bold">HP</td>
-								<td id="poke_hp" class="stats statnumber font-weight-bold"></td>
-								<td>
-									<div class="progress">
-									  <div id="poke_hp_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 45/255)"></div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="stats font-weight-bold">Attack</td>
-								<td id="poke_attack" class="stats statnumber font-weight-bold"></td>
-								<td>
-									<div class="progress">
-									  <div id="poke_attack_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
-									</div>									
-								</td>
-							</tr>
-							<tr>
-								<td class="stats font-weight-bold">Defense</td>
-								<td id="poke_defense" class="stats statnumber font-weight-bold"></td>
-								<td>
-									<div class="progress">
-									  <div id="poke_defense_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
-									</div>									
-								</td>
-							</tr>
-							<tr>
-								<td class="stats font-weight-bold">Sp.Attack</td>
-								<td id="poke_spattack" class="stats statnumber font-weight-bold"></td>
-								<td>
-									<div class="progress">
-									  <div id="poke_spattack_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
-									</div>									
-								</td>
-							</tr>
-							<tr>
-								<td class="stats font-weight-bold">Sp.Defense</td>
-								<td id="poke_spdefense" class="stats statnumber font-weight-bold"></td>
-								<td>
-									<div class="progress">
-									  <div id="poke_spdefense_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
-									</div>									
-								</td>
-							</tr>
-							<tr>
-								<td class="stats font-weight-bold">Speed</td>
-								<td id="poke_speed" class="stats statnumber font-weight-bold"></td>
-								<td>
-									<div class="progress">
-									  <div id="poke_speed_bar" class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 45/255)"></div>
-									</div>									
-								</td>
-							</tr>
-							<tr>
-								<td class="stats font-weight-bold">Total</td>
-								<td id="poke_total" class="stats statnumber font-weight-bold"></td>
-								<td></td>
-							</tr>
+							<table>	
+								<tr>
+									<td class="stats font-weight-bold">HP</td>
+									<td id="poke_hp" class="stats statnumber font-weight-bold"></td>
+									<td>
+										<div class="progress">
+										  <div id="poke_hp_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 45/255)"></div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="stats font-weight-bold">Attack</td>
+									<td id="poke_attack" class="stats statnumber font-weight-bold"></td>
+									<td>
+										<div class="progress">
+										  <div id="poke_attack_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
+										</div>									
+									</td>
+								</tr>
+								<tr>
+									<td class="stats font-weight-bold">Defense</td>
+									<td id="poke_defense" class="stats statnumber font-weight-bold"></td>
+									<td>
+										<div class="progress">
+										  <div id="poke_defense_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
+										</div>									
+									</td>
+								</tr>
+								<tr>
+									<td class="stats font-weight-bold">Sp.Attack</td>
+									<td id="poke_spattack" class="stats statnumber font-weight-bold"></td>
+									<td>
+										<div class="progress">
+										  <div id="poke_spattack_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
+										</div>									
+									</td>
+								</tr>
+								<tr>
+									<td class="stats font-weight-bold">Sp.Defense</td>
+									<td id="poke_spdefense" class="stats statnumber font-weight-bold"></td>
+									<td>
+										<div class="progress">
+										  <div id="poke_spdefense_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
+										</div>									
+									</td>
+								</tr>
+								<tr>
+									<td class="stats font-weight-bold">Speed</td>
+									<td id="poke_speed" class="stats statnumber font-weight-bold"></td>
+									<td>
+										<div class="progress">
+										  <div id="poke_speed_bar" class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 45/255)"></div>
+										</div>									
+									</td>
+								</tr>
+								<tr>
+									<td class="stats font-weight-bold">Total</td>
+									<td id="poke_total" class="stats statnumber font-weight-bold"></td>
+									<td></td>
+								</tr>
 
-						</table>						
+							</table>
+						</div>
+						<div id="moveset_tab">
+							A lot of info
+						</div>						
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
+				</div>
+				<div class="d-flex justify-content-center flex-row">
+					
+				  	<div class="p-2">
+
+			    		<button id="infomovesetBtn" class="btn btn-mega-forms" onclick="showHide();">INFO/MOVESET</button>		  		
+
+		  			</div>
+
+				</div>	
+
+			</div>
+
+	</div>
 </body>
 </html>
