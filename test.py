@@ -1,4 +1,4 @@
-import learnset_db_test as db
+import learnset_db as db
 
 pokemon = 'Abomasnow'
 

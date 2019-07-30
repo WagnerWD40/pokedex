@@ -2,6 +2,7 @@
 import pokemon_db as db
 import pokedex_entries_db as entries_db
 import abilities_db as a_db
+import learnset_db as learn_db
 import eel
 from random import choice
 
@@ -45,6 +46,12 @@ def search_ability(ability):
 def search_pokedex_entry(pokemon_name):
     if pokemon_name in entries_db.pokedex_entries_db.keys():
         return choice(entries_db.pokedex_entries_db[pokemon_name])
+
+
+@eel.expose
+def search_moveset(pokemon_name):
+    if pokemon_name in learn_db.learnset_db.keys():
+        return learn_db.learnset_db[pokemon_name]['Moves learnt by level up']
 
 
 eel.start('main.html', size=(1250, 720), mode='chrome-app', options={'chromeFlags': ['--disable-http-cache']})

@@ -78,7 +78,7 @@ for name in POKEMON_NAMES:
             if check_key(move_db[pokemon], "Moves learnt by TM alt"):
                 del move_db[pokemon]["Moves learnt by TM alt"]
 
-with open('learnset_db_test.py', 'w', encoding="utf-8") as file:
+with open('learnset_db.py', 'w', encoding="utf-8") as file:
     file.write('# -*- coding: utf-8 -*-\n')
     file.write('learnset_db = {\n')
     for pokemon in sorted(move_db.keys()):

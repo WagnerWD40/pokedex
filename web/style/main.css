@@ -44,6 +44,7 @@ body {
 
 #moveset_tab {
 	display: none;
+	margin: 0px 20px;
 }
 
 .tri-button {
@@ -180,3 +181,34 @@ table {
     background-image: none;
 }
 
+.level {
+	text-align: right;
+	padding-right: 20px;
+}
+
+
+.table-condensed {
+	background-color: #e1f3fa;	
+	border-radius: 18px 18px 0px 0px;
+	height: 100px;
+}
+
+.table-condensed td {
+	color: rgb(60, 60, 60);
+	font-weight: bold;
+	border-bottom: 1px solid white;
+	padding-right: 20px;
+}
+
+#moveset_tab table {
+	padding: 0px 20px;
+}
+
+.table-condensed thead, .table-condensed tbody{
+  display: block;  
+}
+
+.table-condensed tbody{
+  overflow-y: scroll;
+  height: 400px;
+  }

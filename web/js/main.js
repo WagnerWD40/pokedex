@@ -213,6 +213,10 @@ function changeData(number) {
 		} else {
 			next_form_flag = false;
 		}
+
+		if (!forms && !mega && !mega_two) {
+			searchMoveset();
+		}
 	});
 
 }
@@ -352,8 +356,24 @@ function showHide() {
 		document.getElementById('info_tab').style.display = "block"
 		document.getElementById('moveset_tab').style.display = "none"
 	}
-	
-	
+
+}
+
+function searchMoveset() {
+	let pokemon = document.getElementById("poke_name").innerHTML;
+	let moveset = eel.search_moveset(pokemon)();
+	// moveset.then(data => document.getElementById("moveset_tab").innerHTML = data);
+	moveset.then(function (data){
+		let move_list =	data;
+		let table = '';
+		for (let move in move_list) {
+			table += '<tr>\n';
+			table += '<td class="level">' + String(move_list[move][0]) + '</tb>\n';
+			table += '<td>' + String(move_list[move][1]) + '</tb>\n';
+			table += '</tr>\n';
+		}
+		document.getElementById("move_table").innerHTML = table;
+	}); 
 }
 
 document.onkeydown = checkKey;
