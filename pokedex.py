@@ -3,6 +3,7 @@ import pokemon_db as db
 import pokedex_entries_db as entries_db
 import abilities_db as a_db
 import learnset_db as learn_db
+import move_db as move_db
 import eel
 from random import choice
 
