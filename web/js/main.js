@@ -242,7 +242,8 @@ function dexRotate(direction) {
 	mega = false;
 	forms = false;	
 	mega_two = false;
-	charizard_mewtwo = false;
+	///next_form_flag = false;
+	
 	let number;
 	let button;
 
