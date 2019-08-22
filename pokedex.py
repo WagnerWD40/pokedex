@@ -3,7 +3,7 @@ import pokemon_db as db
 import pokedex_entries_db as entries_db
 import abilities_db as a_db
 import learnset_db as learn_db
-#import move_db as move_db
+import move_db as move_db
 import eel
 from random import choice
 
@@ -55,9 +55,14 @@ def search_moveset(pokemon_name):
         return learn_db.learnset_db[pokemon_name]['Moves learnt by level up']
 
 
+@eel.expose
+def search_move(move_name):
+    if move_name in move_db.move_db.keys():
+        return move_db.move_db[move_name]
+
+
 eel.start('main.html', size=(1250, 720), mode='chrome-app', options={'chromeFlags': ['--disable-http-cache']})
 
 # TODO Attack Dex
 # TODO Image transitions
-# TODO Colors of stats bars
 # TODO Min-Max stats as tooltips(maybe)

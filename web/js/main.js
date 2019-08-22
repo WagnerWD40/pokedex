@@ -3,7 +3,7 @@ function changeData(number) {
 	let pokemon = eel.search_by_number(number)();
 	let statBarMax = 200;
 
-	pokemon.then(function (value) {
+	pokemon.then((value)=> {
 		let poke_name = value[0];
 		let poke_number = value[1]['Number'];
 		let poke_title = value[1]['Title'];
@@ -36,7 +36,6 @@ function changeData(number) {
 			poke_stats = value[1]['Mega 2 Stats'];			
 
 		}
-
 
 		//Change stats to/from Mega
 		if (mega && !mega_two) {
@@ -132,7 +131,6 @@ function changeData(number) {
 			} else if (alt_forms_checker) {
 				document.getElementById("pokepic").src = ".\\imgs\\" + value[0] + "-" + value[1]['Alt Form ' + String(form_number) + ' Stats']['Form Name'] + ".png";
 			}
-
 		}
 
 		//Type
@@ -141,72 +139,64 @@ function changeData(number) {
 		document.getElementById("poke_type2").innerHTML = poke_type[1] || "";
 		document.getElementById("poke_type2").style.background = type_colors[poke_type[1]];
 
-		//Abilities
-		//Ability 1
-		document.getElementById("poke_ability1").innerHTML = poke_abilities[0];
+		// Abilities
+
+		const poke_ability_list = [
+			poke_abilities[0],
+			poke_abilities[1],
+			poke_hidden_abilities[0],
+			poke_hidden_abilities[1]
+		]
 		
-		searchAbility(poke_abilities[0]).then(function (data) {
-			$(function () {
-  			$('#poke_ability1').tooltip()	
-  							 .attr('data-original-title', data)
-							 .tooltip('fixTitle')
-					 		.tooltip('show');
-			})
-			
+		const poke_ability_id_list = [
+			'#poke_ability1',
+			'#poke_ability2',
+			'#poke_hidden_ability1',
+			'#poke_hidden_ability2'
+		]
+
+		poke_ability_id_list.forEach((ability, index)=> {
+			document.getElementById(ability.slice(1)).innerHTML = poke_ability_list[index] || "";
+
+			searchAbility(poke_ability_list[index]).then((data)=> {
+				$(function () {
+	  			$(ability).tooltip()	
+	  							 .attr('data-original-title', data)
+								 .tooltip('_fixTitle')
+						 		 .tooltip('hide');
+ 		 		})
+			});
 		});	
-		//Ability 2
-		document.getElementById("poke_ability2").innerHTML = poke_abilities[1] || "";
-		
-		searchAbility(poke_abilities[1]).then(function (data) {
-			$(function () {
-  			$('#poke_ability2').tooltip()	
-  							 .attr('data-original-title', data)
-							 .tooltip('fixTitle')
-					 		.tooltip('show');
-			})
-			
-		});	
-		//Hidden Ability 1
-		document.getElementById("poke_hidden_ability1").innerHTML = poke_hidden_abilities[0] || "";
-		
-		searchAbility(poke_hidden_abilities[0]).then(function (data) {
-			$(function () {
-  			$('#poke_hidden_ability1').tooltip()	
-  							 .attr('data-original-title', data)
-							 .tooltip('fixTitle')
-					 		.tooltip('show');
-			})
-			
-		});	
-		//Hidden Ability 2
-		document.getElementById("poke_hidden_ability2").innerHTML = poke_hidden_abilities[1] || "";
-		
-		searchAbility(poke_hidden_abilities[1]).then(function (data) {
-			$(function () {
-  			$('#poke_hidden_ability2').tooltip()	
-  							 .attr('data-original-title', data)
-							 .tooltip('fixTitle')
-					 		.tooltip('show');
-			})
-			
-		});							
 
 		//Stats
-		document.getElementById("poke_hp").innerHTML = poke_stats['HP'];
-		document.getElementById("poke_attack").innerHTML = poke_stats['Attack'];
-		document.getElementById("poke_defense").innerHTML = poke_stats['Defense'];
-		document.getElementById("poke_spattack").innerHTML = poke_stats['Sp. Attack'];
-		document.getElementById("poke_spdefense").innerHTML = poke_stats['Sp. Defense'];
-		document.getElementById("poke_speed").innerHTML = poke_stats['Speed'];
-		document.getElementById("poke_total").innerHTML = poke_stats['Total'];
+		let id_list = [
+			"poke_hp", 
+			"poke_attack",
+			"poke_defense",
+			"poke_spattack",
+			"poke_spdefense",
+			"poke_speed",
+			"poke_total"
+		]
+
+		let stats_list = [
+			poke_stats['HP'],
+			poke_stats['Attack'],
+			poke_stats['Defense'],
+			poke_stats['Sp. Attack'],
+			poke_stats['Sp. Defense'],
+			poke_stats['Speed'],
+			poke_stats['Total']
+		]
+
+		id_list.forEach((id, index)=> {
+			document.getElementById(id).innerHTML = stats_list[index];
+		});
 
 		//Bars
-		document.getElementById("poke_hp_bar").style = `width: calc(100% * ${Number(poke_stats['HP'])}/${statBarMax})`;
-		document.getElementById("poke_attack_bar").style = `width: calc(100% * ${Number(poke_stats['Attack'])}/${statBarMax})`;
-		document.getElementById("poke_defense_bar").style = `width: calc(100% * ${Number(poke_stats['Defense'])}/${statBarMax})`;
-		document.getElementById("poke_spattack_bar").style = `width: calc(100% * ${Number(poke_stats['Sp. Attack'])}/${statBarMax})`;
-		document.getElementById("poke_spdefense_bar").style = `width: calc(100% * ${Number(poke_stats['Sp. Defense'])}/${statBarMax})`;
-		document.getElementById("poke_speed_bar").style = `width: calc(100% * ${Number(poke_stats['Speed'])}/${statBarMax})`;
+		id_list.slice(0, 6).forEach((id, index)=> {
+			document.getElementById(id + "_bar").style = `width: calc(100% * ${Number(stats_list[index])}/${statBarMax})`;
+		});
 
 		if (value[1]['Alt Form ' + String(form_number + 1) + ' Stats']) {
 			next_form_flag = true;
@@ -217,11 +207,16 @@ function changeData(number) {
 		if (!forms && !mega && !mega_two) {
 			searchMoveset();
 		}
+
+
+	
 	});
 
 }
 
 function dexSearch() {
+	// Search the database for all pokemon base data
+
 	mega = false;
 	forms = false;	
 	mega_two = false;
@@ -230,7 +225,8 @@ function dexSearch() {
 	let pokemon_number = eel.search_by_name(name_search.value)();
 
 	document.forms["search"].reset();
-	pokemon_number.then(function (value) {
+	
+	pokemon_number.then((value)=> {
 	 	
 	 	active_pokemon = value;
 	 	changeData(active_pokemon);
@@ -239,6 +235,8 @@ function dexSearch() {
 }
 
 function dexRotate(direction) {
+	// Mechanics for the two big buttons
+
 	mega = false;
 	forms = false;	
 	mega_two = false;
@@ -274,6 +272,7 @@ function dexRotate(direction) {
 }
 
 function checkKey(e) {
+	// Keyboard controls
 
     e = e || window.event;
 
@@ -296,10 +295,12 @@ function checkKey(e) {
 }
 
 function searchAbility(ability) {
+	// search the abilities description for the Ability Tooltips
+
 	let search = eel.search_ability(ability)();
 	let result;
 
-	result = search.then(function (value) {
+	result = search.then((value)=> {
 		let description = value;
 		return description;
 	})
@@ -307,6 +308,8 @@ function searchAbility(ability) {
 }
 
 function changeMega() {
+	// Mechanics to aid in showing the Mega forms
+
 	if (!mega && mega_checker) {
 		mega = true;
 		changeData(active_pokemon);
@@ -330,6 +333,8 @@ function changeMega() {
 }
 
 function changeForms() {
+	// The mechanics for showing a the different forms of a pokemon
+
 	if (!forms && forms_checker) {
 		forms = true;
 		changeData(active_pokemon);
@@ -344,11 +349,15 @@ function changeForms() {
 }
 
 function pokemonEntry(poke_name) {
+	// Search the database for the Pokemon Entry data to be displayed
+
 	let entry = eel.search_pokedex_entry(poke_name)();
 	entry.then(data => document.getElementById("dex_entry").innerHTML = data);
 }
 
 function showHide() {
+	// Show and hide the right hand menu
+
 	let state = document.getElementById('info_tab').style.display;
 	if (state != 'none') {
 		document.getElementById('info_tab').style.display = "none"
@@ -360,21 +369,56 @@ function showHide() {
 
 }
 
+
 function searchMoveset() {
+	// Search the database for the Learnset of the pokemon and populate the move list
+
 	let pokemon = document.getElementById("poke_name").innerHTML;
 	let moveset = eel.search_moveset(pokemon)();
-	// moveset.then(data => document.getElementById("moveset_tab").innerHTML = data);
-	moveset.then(function (data){
+	
+	moveset.then((data)=> {
 		let move_list =	data;
 		let table = '';
+		test.length = 0;
+
 		for (let move in move_list) {
 			table += '<tr>\n';
-			table += '<td class="level">' + String(move_list[move][0]) + '</tb>\n';
-			table += '<td>' + String(move_list[move][1]) + '</tb>\n';
+			table += '<td class="level">' + String(move_list[move][0]) + '</td>\n';
+			table += '<td id="' + move_list[move][1] + '" onclick="moveShowStats(this.id);">' + move_list[move][1] + '</td>\n';
 			table += '</tr>\n';
-		}
+			// moveStats(move_list[move][1]);
+
 		document.getElementById("move_table").innerHTML = table;
+
+		}
+
+
 	}); 
+}
+
+// function moveStats(move_name) {
+// 	// Used to get move stats from the database
+// 	let move_data = eel.search_move(move_name)();
+
+// 	test.push({move_name: move_data});
+
+// }
+
+function moveShowStats(move) {
+	// Fills in the move info block 
+	console.log(move);
+	let move_data = eel.search_move(move)();
+
+	document.getElementById("move_name").innerHTML = move;
+	
+	move_data.then((data)=> {
+		console.log(data);
+		document.getElementById("move_type").innerText = data["Type"];
+		document.getElementById("move_power_value").innerHTML = data["Power"];
+		document.getElementById("move_accuracy_value").innerHTML = data["Accuracy"];
+		document.getElementById("move_effects").innerHTML = data["Effects"];
+
+	});
 }
 
 document.onkeydown = checkKey;
@@ -389,6 +433,7 @@ let next_form_flag = false;		//checks if next form is valid
 let alola_checker = false;		//flag to check if the form is Alolan
 let mega_two = false;			//band-aid for the Y megas			
 let active_pokemon = 1;
+const test = [];
 
 changeData(active_pokemon);
 		

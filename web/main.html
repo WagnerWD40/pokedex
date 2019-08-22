@@ -49,7 +49,7 @@
 						  	<div>
 						    	
 						    	<input id="search_box" type="text"  placeholder="Search by name" name="search_name" onsubmit="return false;">
-						    	<button id="myBtn" class="btn" onclick="dexSearch();">Search</button>
+						    	<button id="myBtn" type="search" class="btn" onclick="dexSearch();">Search</button>
 						    	
 						  	</div>
 						</form>
@@ -92,10 +92,10 @@
 							</div>
 							<div class="d-flex justify-content-center flex-row">
 							  	<div class="p-2">
-									<span class="badge badge-pill" id="poke_type1"></span>
+									<span class="badge badge-pill poke_type" id="poke_type1"></span>
 							  	</div>
 							  	<div class="p-2">
-									<span class="badge badge-pill" id="poke_type2"></span>
+									<span class="badge badge-pill poke_type" id="poke_type2"></span>
 								</div>
 							</div>
 						</div>
@@ -150,7 +150,7 @@
 									<td id="poke_hp" class="stats statnumber font-weight-bold"></td>
 									<td>
 										<div class="progress">
-										  <div id="poke_hp_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 45/255)"></div>
+										  <div id="poke_hp_bar"  class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 45/255)"></div>
 										</div>
 									</td>
 								</tr>
@@ -159,7 +159,7 @@
 									<td id="poke_attack" class="stats statnumber font-weight-bold"></td>
 									<td>
 										<div class="progress">
-										  <div id="poke_attack_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
+										  <div id="poke_attack_bar"  class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
 										</div>									
 									</td>
 								</tr>
@@ -168,7 +168,7 @@
 									<td id="poke_defense" class="stats statnumber font-weight-bold"></td>
 									<td>
 										<div class="progress">
-										  <div id="poke_defense_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
+										  <div id="poke_defense_bar"  class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 49/255)"></div>
 										</div>									
 									</td>
 								</tr>
@@ -177,7 +177,7 @@
 									<td id="poke_spattack" class="stats statnumber font-weight-bold"></td>
 									<td>
 										<div class="progress">
-										  <div id="poke_spattack_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
+										  <div id="poke_spattack_bar"  class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
 										</div>									
 									</td>
 								</tr>
@@ -186,7 +186,7 @@
 									<td id="poke_spdefense" class="stats statnumber font-weight-bold"></td>
 									<td>
 										<div class="progress">
-										  <div id="poke_spdefense_bar"  class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
+										  <div id="poke_spdefense_bar"  class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="255" style="width: calc(100% * 65/255)"></div>
 										</div>									
 									</td>
 								</tr>
@@ -208,17 +208,38 @@
 							</table>
 						</div>
 						<div id="moveset_tab">
-							<table class="table-condensed">
-								<thead>
-									<tr>
-										<th scope="col" class='level'>Level</th>
-										<th scope="col">Move</th>
-									</tr>
-								</thead>
-							  <tbody id="move_table">
+							<div id="moveset_tab_grid">
+								<table class="table-condensed">
+									<thead>
+										<tr>
+											<th scope="col" class='level'>Level</th>
+											<th scope="col">Move</th>
+										</tr>
+									</thead>
+								  <tbody id="move_table">
 
-							  </tbody>
-							</table>
+								  </tbody>
+								</table>
+
+								<!-- MOVE INFO PANEL -->
+
+								<div id="move_info">
+									
+									<div id="move_name" class="grid-title"><strong>Tackle</strong></div>
+									
+									<div id="move_type" class="badge badge-pill poke_type grid-title">Normal</div>
+									
+									<div id="move_power" class="badge badge-pill poke_type grid-title">Power</div>
+									
+									<div id="move_power_value" class="grid-title"><strong>40</strong></div>
+									
+									<div id="move_accuracy" class="badge badge-pill poke_type grid-title">Accuracy</div>
+									
+									<div id="move_accuracy_value" class="grid-title"><strong>100</strong></div>
+									
+									<div id="move_effects"><strong>Hits the target</strong></div>		
+								</div>
+							</div>
 						</div>						
 					</div>
 

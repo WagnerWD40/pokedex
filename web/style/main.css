@@ -93,6 +93,29 @@ table {
 	margin-left: 15px;
 }
 
+
+/*STATS BARS*/
+
+#poke_hp_bar {
+	background-color: #39ce13 !important;
+}
+#poke_attack_bar {
+	background-color: #cc1818 !important;
+}
+#poke_defense_bar {
+	background-color: #f1d759 !important;
+}
+#poke_spattack_bar {
+	background-color: #3758fd !important;
+}
+#poke_spdefense_bar {
+	background-color: #0ac3b2 !important;
+}
+#poke_speed_bar {
+	background-color: #f3802f !important;
+}
+
+
 #type_tab {
 	background-color: white;
 	border-radius: 18px;
@@ -111,7 +134,7 @@ table {
 	text-align: right;
 }
 
-#poke_type1, #poke_type2 {
+.poke_type {
 	font-size: xx-large;
 	background-color: black;
 	color: white;
@@ -181,6 +204,24 @@ table {
     background-image: none;
 }
 
+/*==========================
+MOVESET TABLE
+==========================*/
+#moveset_tab_grid {
+	height: 550px;
+	display: grid;
+	grid-template-rows: [move table] 2f [move info] 1f;
+	grid-template-areas: "table"
+						 "table"
+						 "info"
+}
+
+#moveset_tab table {
+	padding: 0px 20px;
+	margin-bottom: 0;
+	grid-area: table;
+}
+
 .level {
 	text-align: right;
 	padding-right: 20px;
@@ -200,9 +241,7 @@ table {
 	padding-right: 20px;
 }
 
-#moveset_tab table {
-	padding: 0px 20px;
-}
+
 
 .table-condensed thead, .table-condensed tbody{
   display: block;  
@@ -210,5 +249,70 @@ table {
 
 .table-condensed tbody{
   overflow-y: scroll;
-  height: 400px;
-  }
+  height: 315px;
+}
+
+/*==========================
+MOVE DISPLAY
+==========================*/
+
+#move_info {
+	width: 400px;
+	height: 160px;
+	margin-bottom: 10px;
+	background-color: #D2EDF8;
+	border-radius: 50px;
+	border: 2px solid white;
+
+	grid-area: info;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-template-areas: "move move move"
+						 "power type acc"		
+						 "powval none accval"
+						 "eff eff eff"
+}
+
+.grid-title {
+	justify-self: center;
+	align-self: center;	
+	font-size: large;
+}
+
+#move_name {
+	grid-area: move;
+	font-size: x-large;	
+	font-weight: bold;	
+}
+
+#move_type {
+	grid-area: type;
+}
+
+#move_power {
+	grid-area: power;
+}
+
+#move_power_value {
+	grid-area: powval;
+	font-size: x-large;
+	align-self: start;	
+}
+
+#move_accuracy{
+	grid-area: acc;
+}
+
+#move_accuracy_value{
+	grid-area: accval;
+	font-size: x-large;
+	align-self: end;		
+}
+
+#move_effects {
+	grid-area: eff;
+	justify-self: center;
+	font-weight: 700;	
+}
