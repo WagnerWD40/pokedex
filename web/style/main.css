@@ -271,20 +271,32 @@ MOVE DISPLAY
 	grid-template-rows: 1fr 1fr 1fr 1fr;
 	grid-template-areas: "move move move"
 						 "power type acc"		
-						 "powval none accval"
+						 "powval class accval"
 						 "eff eff eff"
 }
 
 .grid-title {
 	justify-self: center;
 	align-self: center;	
+	
 	font-size: large;
+}
+
+.grid-value {
+	font-weight: bold;
 }
 
 #move_name {
 	grid-area: move;
-	font-size: x-large;	
-	font-weight: bold;	
+	
+	font-size: large;	
+	font-weight: bold;
+	text-align: center;
+
+	background-color: white;
+	border-radius: 50px;
+	width: 85%;
+	height: 90%;	
 }
 
 #move_type {
@@ -297,8 +309,13 @@ MOVE DISPLAY
 
 #move_power_value {
 	grid-area: powval;
-	font-size: x-large;
 	align-self: start;	
+	
+	font-size: x-large;
+}
+
+#move_class {
+	grid-area: class;
 }
 
 #move_accuracy{
@@ -307,12 +324,21 @@ MOVE DISPLAY
 
 #move_accuracy_value{
 	grid-area: accval;
+	align-self: end;	
+	
 	font-size: x-large;
-	align-self: end;		
 }
 
 #move_effects {
 	grid-area: eff;
 	justify-self: center;
+
 	font-weight: 700;	
+	text-align: center;
+	font-size: medium;
+
+	background-color: white;
+	border-radius: 50px;
+	width: 85%;
+	height: 90%;		
 }

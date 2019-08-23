@@ -208,8 +208,6 @@ function changeData(number) {
 			searchMoveset();
 		}
 
-
-	
 	});
 
 }
@@ -386,7 +384,6 @@ function searchMoveset() {
 			table += '<td class="level">' + String(move_list[move][0]) + '</td>\n';
 			table += '<td id="' + move_list[move][1] + '" onclick="moveShowStats(this.id);">' + move_list[move][1] + '</td>\n';
 			table += '</tr>\n';
-			// moveStats(move_list[move][1]);
 
 		document.getElementById("move_table").innerHTML = table;
 
@@ -396,14 +393,6 @@ function searchMoveset() {
 	}); 
 }
 
-// function moveStats(move_name) {
-// 	// Used to get move stats from the database
-// 	let move_data = eel.search_move(move_name)();
-
-// 	test.push({move_name: move_data});
-
-// }
-
 function moveShowStats(move) {
 	// Fills in the move info block 
 	console.log(move);
@@ -412,12 +401,16 @@ function moveShowStats(move) {
 	document.getElementById("move_name").innerHTML = move;
 	
 	move_data.then((data)=> {
-		console.log(data);
-		document.getElementById("move_type").innerText = data["Type"];
+		document.getElementById("move_type").innerHTML = data["Type"];
 		document.getElementById("move_power_value").innerHTML = data["Power"];
 		document.getElementById("move_accuracy_value").innerHTML = data["Accuracy"];
+		document.getElementById("move_class").innerHTML = data["Class"];
 		document.getElementById("move_effects").innerHTML = data["Effects"];
 
+		//STYLE - TO BE CHANGED LATER
+		document.getElementById("move_type").style.background = type_colors[data["Type"]];
+		document.getElementById("move_power").style.background = type_colors[data["Type"]];
+		document.getElementById("move_accuracy").style.background = type_colors[data["Type"]];
 	});
 }
 
