@@ -3,7 +3,7 @@ function changeData(number) {
 	let pokemon = eel.search_by_number(number)();
 	let statBarMax = 200;
 
-	pokemon.then((value)=> {
+	pokemon.then(value => {
 		let poke_name = value[0];
 		let poke_number = value[1]['Number'];
 		let poke_title = value[1]['Title'];
@@ -154,19 +154,19 @@ function changeData(number) {
 			poke_abilities[1],
 			poke_hidden_abilities[0],
 			poke_hidden_abilities[1]
-		]
+		];
 		
 		const poke_ability_id_list = [
 			'#poke_ability1',
 			'#poke_ability2',
 			'#poke_hidden_ability1',
 			'#poke_hidden_ability2'
-		]
+		];
 
 		poke_ability_id_list.forEach((ability, index)=> {
 			document.getElementById(ability.slice(1)).innerHTML = poke_ability_list[index] || "";
 
-			searchAbility(poke_ability_list[index]).then((data)=> {
+			searchAbility(poke_ability_list[index]).then(data => {
 				$(function () {
 	  			$(ability).tooltip()	
 	  							 .attr('data-original-title', data)
@@ -185,7 +185,7 @@ function changeData(number) {
 			"poke_spdefense",
 			"poke_speed",
 			"poke_total"
-		]
+		];
 
 		let stats_list = [
 			poke_stats['HP'],
@@ -195,7 +195,7 @@ function changeData(number) {
 			poke_stats['Sp. Defense'],
 			poke_stats['Speed'],
 			poke_stats['Total']
-		]
+		];
 
 		id_list.forEach((id, index)=> {
 			document.getElementById(id).innerHTML = stats_list[index];
@@ -220,6 +220,7 @@ function changeData(number) {
 
 }
 
+
 function dexSearch() {
 	// Search the database for all pokemon base data
 
@@ -232,13 +233,14 @@ function dexSearch() {
 
 	document.forms["search"].reset();
 	
-	pokemon_number.then((value)=> {
+	pokemon_number.then(value => {
 	 	
 	 	active_pokemon = value;
 	 	changeData(active_pokemon);
 	 	console.log(active_pokemon);
 	})
 }
+
 
 function dexRotate(direction) {
 	// Mechanics for the two big buttons
@@ -277,6 +279,7 @@ function dexRotate(direction) {
 
 }
 
+
 function checkKey(e) {
 	// Keyboard controls
 
@@ -300,18 +303,20 @@ function checkKey(e) {
     }
 }
 
+
 function searchAbility(ability) {
 	// search the abilities description for the Ability Tooltips
 
 	let search = eel.search_ability(ability)();
 	let result;
 
-	result = search.then((value)=> {
+	result = search.then(value => {
 		let description = value;
 		return description;
 	})
 	return result;
 }
+
 
 function changeMega() {
 	// Mechanics to aid in showing the Mega forms
@@ -338,6 +343,7 @@ function changeMega() {
 	}
 }
 
+
 function changeForms() {
 	// The mechanics for showing a the different forms of a pokemon
 
@@ -354,6 +360,7 @@ function changeForms() {
 	}
 }
 
+
 function pokemonEntry(poke_name) {
 	// Search the database for the Pokemon Entry data to be displayed
 
@@ -361,9 +368,18 @@ function pokemonEntry(poke_name) {
 	entry.then(data => document.getElementById("dex_entry").innerHTML = data);
 }
 
+
 function showHide() {
 	// Show and hide the right hand menu
 
+	let changeMovesetBtn = document.getElementById("changemovesetBtn");
+
+	if (changeMovesetBtn.hasAttribute("disabled")) {
+		changemovesetBtn.removeAttribute("disabled");
+	} else {
+		changemovesetBtn.setAttribute("disabled", true);
+	}
+	
 	document.getElementById('info_tab').classList.toggle("info-invisible");
 	document.getElementById('moveset_tab').classList.toggle("info-invisible");
 	document.getElementById('info_tab').classList.toggle("info-visible");
@@ -371,28 +387,95 @@ function showHide() {
 }
 
 
-function searchMoveset() {
+function changeMoveset() {
+	if (moveset_list_index + 1 < 7) { // 7 is the moveset_list.length
+		moveset_list_index += 1;
+		searchMoveset(moveset_list_index);
+	} else {
+		moveset_list_index = 0;
+		searchMoveset(moveset_list_index);		
+
+	}
+
+}
+
+
+function searchMoveset(moveset_list_index = 0) {
 	// Search the database for the Learnset of the pokemon and populate the move list
+	const moveset_list = [
+		'Moves learnt by level up', 
+		'Moves learnt by TM', 
+		'Moves learnt by level up alt', 
+		'Egg moves', 
+		'Move Tutor moves', 
+		'Moves learnt by TM alt', 
+		'Transfer-only moves'
+		];
 
 	let pokemon = document.getElementById("poke_name").innerHTML;
-	let moveset = eel.search_moveset(pokemon)();
+
+	data_to_search = {
+		name: pokemon,
+		active_moveset: moveset_list[moveset_list_index]
+	}
+
+	let moveset = eel.search_moveset(data_to_search)();
+
+	const single_element_moves = [
+		'Egg moves', 
+		'Move Tutor moves', 
+		'Transfer-only moves'
+	]
+
+	let header = '';
 	
-	moveset.then((data)=> {
-		let move_list =	data;
-		let table = '';
-		test.length = 0;
+	if (data_to_search["active_moveset"].endsWith("up") || data_to_search["active_moveset"].endsWith("up alt")) {
+		header = `<th scope="col" class='level'>Level</th>
+					<th scope="col">Move</th>`
+	} else if (data_to_search["active_moveset"].endsWith("TM") || data_to_search["active_moveset"].endsWith("TM alt")) {
+		header = `<th scope="col" class='level'>TM</th>
+					<th scope="col">Move</th>`
+	} else {
+		header = `<th scope="col">${data_to_search["active_moveset"]}</th>`
+	}
 
-		for (let move in move_list) {
-			table += '<tr>\n';
-			table += '<td class="level">' + String(move_list[move][0]) + '</td>\n';
-			table += '<td id="' + move_list[move][1] + '" onmouseover="moveShowStats(this.id);">' + move_list[move][1] + '</td>\n';
-			table += '</tr>\n';
+	let table = '';
+	table += `<thead>
+				<tr>
+					${header}
+				</tr>
+			</thead>
+			<tbody id="move_table">\n`
+	
+	if (single_element_moves.includes(data_to_search["active_moveset"])) { 
+		moveset.then(data => {
+			let move_list =	data;
 
-		document.getElementById("move_table").innerHTML = table;
+			for (let move in move_list) {
+				table += '<tr>\n';
+				table += '<td id="' + move_list[move][0] + '" onmouseover="moveShowStats(this.id);">' + move_list[move][0] + '</td>\n';
+				table += '</tr>\n';
+			}
+			table += '</tbody>\n'
+			document.getElementById("moveset-table").innerHTML = table;
+		}); 	
 
-		}
+	} else {
+	 	moveset.then(data => {
+			let move_list =	data;
 
-	}); 
+			for (let move in move_list) {
+				table += '<tr>\n';
+				table += '<td class="level">' + String(move_list[move][0]) + '</td>\n';
+				table += '<td id="' + move_list[move][1] + '" onmouseover="moveShowStats(this.id);">' + move_list[move][1] + '</td>\n';
+				table += '</tr>\n';
+			
+			}
+			table += '</tbody>\n'
+			document.getElementById("moveset-table").innerHTML = table;
+		}); 
+	}
+
 }
 
 function moveShowStats(move) {
@@ -443,6 +526,7 @@ function moveShowStats(move) {
 	});
 }
 
+
 document.onkeydown = checkKey;
 
 let mega_checker = false; 	 //flag to check if pokemon has a mega form
@@ -454,9 +538,8 @@ let form_number = 1;			//sets active form for alternate forms
 let next_form_flag = false;		//checks if next form is valid
 let alola_checker = false;		//flag to check if the form is Alolan
 let mega_two = false;			//band-aid for the Y megas			
+let moveset_list_index = 0;
 let active_pokemon = 1;
-
-const test = [];
 
 const type_list = [
 	"normal", 
@@ -477,7 +560,7 @@ const type_list = [
 	"dark", 
 	"steel", 
 	"fairy"
-	]
+	];
 
 changeData(active_pokemon);
 

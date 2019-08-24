@@ -24,18 +24,22 @@ body {
 }
 
 #pokepic {
-	width: 220px;
-	height: 220px;
-	margin: 20px 80px;
+	width: 230px;
+	height: 230px;
+	align-self: center;
+	justify-self: center;
 }
 
 #pokepick-container {
 	width: 220px;
 	height: 250px;
+	display: flex;
+	justify-content: center;
+	
 }
 
 .backblue {
-	background-color: #D2EDF8;
+	background: linear-gradient(to bottom, #a5e6f0, #D2EDF8);
 	box-shadow: 5px 5px rgba(50, 50, 50, 0.2), 5px 5px white inset;
 	border-radius: 18px;
 	border-top: 5px solid black;
@@ -247,37 +251,58 @@ MOVESET TABLE
 }
 
 #moveset_tab table {
-	padding: 0px 20px;
 	margin-bottom: 0;
 	grid-area: table;
+	justify-self: center;
 }
 
 .level {
 	text-align: right;
 	padding-right: 20px;
+	margin-right: 10px;
 }
 
 
 .table-condensed {
-	background-color: #e1f3fa;	
+	background: linear-gradient(to bottom, #43e1fd7d, #b0e1f587);
 	border-radius: 18px 18px 0px 0px;
 	height: 100px;
 }
 
 .table-condensed td {
-	color: rgb(60, 60, 60);
-	font-weight: bold;
+	color: #717171;
+	font-weight: 500;
 	border-bottom: 1px solid white;
 	padding-right: 20px;
+	padding-left: 12px;
 }
 
-.table-condensed thead, .table-condensed tbody{
-  display: block;  
+.table-condensed tbody tr:hover {
+	background-color: #35d6f2;
+}
+
+.table-condensed tbody tr:hover > td {
+	color: black;
+	font-weight: bolder;
+	font-size: larger;
+}
+
+.table-condensed thead {
+  	display: block;
+
+  	background-color: white;
+  	border-radius: 15px 15px 0 0;
 }
 
 .table-condensed tbody{
-  overflow-y: scroll;
-  height: 315px;
+	display: block; 
+  	overflow-y: scroll;
+  	height: 315px;
+}
+
+.center {
+	margin-left:auto; 
+	margin-right:auto;
 }
 
 /*
@@ -382,7 +407,7 @@ MOVE DISPLAY
 
 #move_accuracy_value{
 	grid-area: accval;
-	align-self: end;	
+	align-self: start;
 	
 	font-size: x-large;
 }

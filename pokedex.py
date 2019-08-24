@@ -50,9 +50,12 @@ def search_pokedex_entry(pokemon_name):
 
 
 @eel.expose
-def search_moveset(pokemon_name):
+def search_moveset(data_received):  # data_received is an object {name: pokemon name, active_moveset: one of the valid movesets}
+    pokemon_name = data_received['name']
+    active_moveset = data_received['active_moveset']
+
     if pokemon_name in learn_db.learnset_db.keys():
-        return learn_db.learnset_db[pokemon_name]['Moves learnt by level up']
+        return learn_db.learnset_db[pokemon_name][active_moveset]
 
 
 @eel.expose
