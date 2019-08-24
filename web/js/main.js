@@ -201,6 +201,38 @@ function changeData(number) {
 			document.getElementById(id).innerHTML = stats_list[index];
 		});
 
+		//Stats Tooltips
+		//calcMinMaxStats(base_stat, iv, ev, level, nature = false, hp = false)
+		const hp_lv50_min = calcMinMaxStats(poke_stats['HP'], 0, 0, 50, false, true);
+		const hp_lv50_max = calcMinMaxStats(poke_stats['HP'], 31, 255, 50, false, true);
+		const hp_lv100_min = calcMinMaxStats(poke_stats['HP'], 0, 0, 100, false, true);
+		const hp_lv100_max = calcMinMaxStats(poke_stats['HP'], 31, 255, 100, false, true);
+		const data = `Lv.50: ${hp_lv50_min} - ${hp_lv50_max} | Lv.100: ${hp_lv100_min} - ${hp_lv100_max}`
+
+		$(function () {
+		$("#poke_hp").tooltip()	
+					 .attr('title', data)
+					 .tooltip('_fixTitle')
+			 		 .tooltip('hide');
+ 		})
+
+		stats_list.slice(1, 6).forEach((stat, index) => {
+			const stat_lv50_min = calcMinMaxStats(stat, 0, 0, 50);
+			const stat_lv50_max = calcMinMaxStats(stat, 31, 255, 50, nature = true);
+			const stat_lv100_min = calcMinMaxStats(stat, 0, 0, 100);
+			const stat_lv100_max = calcMinMaxStats(stat, 31, 255, 100, nature = true);
+			const data = `Lv. 50: ${stat_lv50_min} - ${stat_lv50_max} | Lv. 100: ${stat_lv100_min} - ${stat_lv100_max}`
+
+			$(function () {
+			$("#" + id_list[index + 1]).tooltip()	
+						 .attr('data-original-title', data)
+						 .tooltip('_fixTitle')
+				 		 .tooltip('hide');
+	 		})			
+
+
+		});
+
 		//Bars
 		id_list.slice(0, 6).forEach((id, index)=> {
 			document.getElementById(id + "_bar").style = `width: calc(100% * ${Number(stats_list[index])}/${statBarMax})`;
@@ -388,6 +420,7 @@ function showHide() {
 
 
 function changeMoveset() {
+	//Rotates through the moveset list
 	if (moveset_list_index + 1 < 7) { // 7 is the moveset_list.length
 		moveset_list_index += 1;
 		searchMoveset(moveset_list_index);
@@ -526,6 +559,21 @@ function moveShowStats(move) {
 	});
 }
 
+function calcMinMaxStats(base_stat, iv, ev, level, nature = false, hp = false) {
+	let stat;
+	if (hp) {
+		stat = (((2 * base_stat + iv + (ev / 4)) * level) / 100) + level + 10;
+	} else { 
+		stat = (((2 * base_stat + iv + (ev / 4)) * level) / 100) + 5;
+		if (nature) {
+			stat = Math.floor(stat) + stat * 0.1;
+		} else {
+			stat = Math.floor(stat) - stat * 0.1;
+		}
+	}
+
+	return Math.floor(stat);
+}
 
 document.onkeydown = checkKey;
 
