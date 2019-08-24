@@ -18,14 +18,13 @@ function changeData(number) {
 		//Checks if pokemon has Mega 
 		if (value[1]['Mega Stats']) {
 			mega_checker = true;
-			document.getElementById("megaBtn").style.background = "#4287f5";
-			document.getElementById("megaBtn").style.color = "white";			
 		} else {
 			mega_checker = false;
-			document.getElementById("megaBtn").style.background = "black";
-			document.getElementById("megaBtn").style.color = "black";			
 		}
-		
+
+		document.getElementById("megaBtn").classList.toggle("active-button", mega_checker);
+		document.getElementById("megaBtn").classList.toggle("inactive-button", !mega_checker);
+
 		//Special case for Y Megas
 
 		if (mega_two) {
@@ -60,8 +59,6 @@ function changeData(number) {
 		//Checks if pokemon has Alternative Forms
 		if (value[1]['Alt Form 1 Stats'] || value[1]['Alolan Stats'] ) {
 			forms_checker = true;
-			document.getElementById("formsBtn").style.background = "#4287f5";
-			document.getElementById("formsBtn").style.color = "white";	
 			if (value[1]['Alt Form 1 Stats']) {
 				alt_forms_checker = true;
 			} else if (value[1]['Alolan Stats']) {
@@ -71,9 +68,10 @@ function changeData(number) {
 			forms_checker = false;
 			alt_forms_checker = false;
 			alola_checker = false;
-			document.getElementById("formsBtn").style.background = "black";
-			document.getElementById("formsBtn").style.color = "black";			
 		}
+
+		document.getElementById("formsBtn").classList.toggle("active-button", forms_checker);
+		document.getElementById("formsBtn").classList.toggle("inactive-button", !forms_checker);
 
 		//Change data to Alt Form/Alola
 		if (forms) {
@@ -134,11 +132,42 @@ function changeData(number) {
 		}
 
 		//Type
-		document.getElementById("poke_type1").innerHTML = poke_type[0];
-		document.getElementById("poke_type1").style.background = type_colors[poke_type[0]];
-		document.getElementById("poke_type2").innerHTML = poke_type[1] || "";
-		document.getElementById("poke_type2").style.background = type_colors[poke_type[1]];
+		const type_list = [
+			"normal", 
+			"fire", 
+			"fighting", 
+			"water", 
+			"flying", 
+			"grass", 
+			"poison", 
+			"electric", 
+			"ground", 
+			"psychic", 
+			"rock", 
+			"ice", 
+			"bug", 
+			"dragon", 
+			"ghost", 
+			"dark", 
+			"steel", 
+			"fairy"
+			]
 
+		document.getElementById("poke_type1").innerHTML = poke_type[0];
+		document.getElementById("poke_type2").innerHTML = poke_type[1] || "";
+		
+		type_list.forEach(type => {
+			document.getElementById("poke_type1").classList.remove(type);
+		});
+		document.getElementById("poke_type1").classList.add(poke_type[0].toLowerCase());
+				
+		if (poke_type[1]) {
+			type_list.forEach(type => {
+				document.getElementById("poke_type2").classList.remove(type);
+			});
+			document.getElementById("poke_type2").classList.add(poke_type[1].toLowerCase());
+		}
+		
 		// Abilities
 
 		const poke_ability_list = [
@@ -382,7 +411,7 @@ function searchMoveset() {
 		for (let move in move_list) {
 			table += '<tr>\n';
 			table += '<td class="level">' + String(move_list[move][0]) + '</td>\n';
-			table += '<td id="' + move_list[move][1] + '" onclick="moveShowStats(this.id);">' + move_list[move][1] + '</td>\n';
+			table += '<td id="' + move_list[move][1] + '" onmouseover="moveShowStats(this.id);">' + move_list[move][1] + '</td>\n';
 			table += '</tr>\n';
 
 		document.getElementById("move_table").innerHTML = table;
@@ -395,22 +424,48 @@ function searchMoveset() {
 
 function moveShowStats(move) {
 	// Fills in the move info block 
-	console.log(move);
+	const move_class_css_class = {
+		Physical: "physical",
+		Special: "special",
+		Status: "status"
+	}
+
+	const move_info_ids = [
+		"move_type",
+		"move_power_value",
+		"move_accuracy_value",
+		"move_class",
+		"move_effects"
+	]
+
 	let move_data = eel.search_move(move)();
 
 	document.getElementById("move_name").innerHTML = move;
 	
 	move_data.then((data)=> {
-		document.getElementById("move_type").innerHTML = data["Type"];
-		document.getElementById("move_power_value").innerHTML = data["Power"];
-		document.getElementById("move_accuracy_value").innerHTML = data["Accuracy"];
-		document.getElementById("move_class").innerHTML = data["Class"];
-		document.getElementById("move_effects").innerHTML = data["Effects"];
+		const data_list = [
+			data["Type"],
+			data["Power"],
+			data["Accuracy"],
+			data["Class"],
+			data["Effects"]
+		]
+
+		move_info_ids.forEach((id, index)=> {
+			document.getElementById(id).innerHTML = data_list[index];
+		});
 
 		//STYLE - TO BE CHANGED LATER
 		document.getElementById("move_type").style.background = type_colors[data["Type"]];
 		document.getElementById("move_power").style.background = type_colors[data["Type"]];
 		document.getElementById("move_accuracy").style.background = type_colors[data["Type"]];
+
+		Object.keys(move_class_css_class).forEach(move_class => {
+			document.getElementById("move_class").classList.remove(move_class.toLowerCase());
+		});
+
+		document.getElementById("move_class").classList.add(data["Class"].toLowerCase());
+	
 	});
 }
 

@@ -93,8 +93,11 @@ table {
 	margin-left: 15px;
 }
 
-
-/*STATS BARS*/
+/*
+==========================
+STATS BARS
+==========================
+*/
 
 #poke_hp_bar {
 	background-color: #39ce13 !important;
@@ -150,11 +153,27 @@ table {
 	border-radius: 10px;
 }
 
+/*
+==========================
+BUTTON STYLES
+==========================
+*/
+
 .btn {
 	background: black;
 	color: white;
 	box-shadow: 2px 2px rgba(50, 50, 50, 1), 2px 2px white inset;         
 	border-radius: 15px;
+}
+
+.active-button {
+	background-color: #4287f5;
+	color: white;	
+}
+
+.inactive-button {
+	background-color: black;
+	color: black;
 }
 
 #dex_entry {
@@ -204,9 +223,12 @@ table {
     background-image: none;
 }
 
-/*==========================
+/*
+==========================
 MOVESET TABLE
-==========================*/
+==========================
+*/
+
 #moveset_tab_grid {
 	height: 550px;
 	display: grid;
@@ -241,8 +263,6 @@ MOVESET TABLE
 	padding-right: 20px;
 }
 
-
-
 .table-condensed thead, .table-condensed tbody{
   display: block;  
 }
@@ -252,14 +272,16 @@ MOVESET TABLE
   height: 315px;
 }
 
-/*==========================
+/*
+==========================
 MOVE DISPLAY
-==========================*/
+==========================
+*/
 
 #move_info {
 	width: 400px;
-	height: 160px;
-	margin-bottom: 10px;
+	height: 180px;
+	margin-bottom: 30px;
 	background-color: #D2EDF8;
 	border-radius: 50px;
 	border: 2px solid white;
@@ -286,10 +308,38 @@ MOVE DISPLAY
 	font-weight: bold;
 }
 
+/* MOVE INFO - CLASS CLASSES */
+
+.special {
+	font-size: large;
+	background-color: #2371d8;
+	color: #d3f0f1;
+	text-shadow: 2px 2px rgba(30, 30, 30, 0.3);
+	box-shadow: 2px 2px rgba(30, 30, 30, 0.3);
+}
+
+.physical {
+	font-size: large;
+	background-color: #f34901;
+	color: #f5df04;
+	text-shadow: 2px 2px rgba(30, 30, 30, 0.3);
+	box-shadow: 2px 2px rgba(30, 30, 30, 0.3);
+}
+
+.status {
+	font-size: large;
+	background-color: #a0a172;
+	color: white;
+	text-shadow: 2px 2px rgba(30, 30, 30, 0.3);
+	box-shadow: 2px 2px rgba(30, 30, 30, 0.3);
+}
+
+/* MOVE INFO - IDS */
+
 #move_name {
 	grid-area: move;
 	
-	font-size: large;	
+	font-size: x-large;	
 	font-weight: bold;
 	text-align: center;
 
@@ -341,4 +391,82 @@ MOVE DISPLAY
 	border-radius: 50px;
 	width: 85%;
 	height: 90%;		
+}
+
+/*
+==========================
+TYPE COLORS
+==========================
+*/
+
+.normal {
+	background-color:  #a19168;
+}
+
+.fire {
+	background-color: #d13017;
+}
+
+.fighting {
+	background-color: #851504;
+}
+
+.water {
+	background-color: #1c8dd9;
+}
+
+.flying {
+	background-color: #cfecff;
+}
+
+.grass {
+	background-color: #06bf44;
+}
+
+.poison {
+	background-color: #9d25b8;
+}
+
+.electric {
+	background-color: #fff53b;
+}
+
+.ground {
+	background-color: #cf9204;
+}
+
+.psychic {
+	background-color: #c90a80;
+}
+
+.rock {
+	background-color: #7a5b0c;
+}
+
+.ice {
+	background-color: #5bdede;
+}
+
+.bug {
+	background-color: #366301;
+}
+
+.dragon {
+	background-color: #020cd1;
+}
+
+.ghost {
+	background-color: #5d0063;
+}
+
+.dark {
+	background-color: #413442;
+}
+
+.steel {
+	background-color: #ababab;
+}
+
+.fairy {
+	background-color: #ffbdf5;
 }
