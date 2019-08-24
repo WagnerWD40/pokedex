@@ -3,6 +3,14 @@ body {
 	background: white;
 }
 
+.info-visible {
+	display: block !important;
+}
+
+.info-invisible {
+	display: none !important;
+}
+
 .container {
 	background: #D43438;
 	padding-top: 20px;

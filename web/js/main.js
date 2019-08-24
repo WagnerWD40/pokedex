@@ -132,27 +132,6 @@ function changeData(number) {
 		}
 
 		//Type
-		const type_list = [
-			"normal", 
-			"fire", 
-			"fighting", 
-			"water", 
-			"flying", 
-			"grass", 
-			"poison", 
-			"electric", 
-			"ground", 
-			"psychic", 
-			"rock", 
-			"ice", 
-			"bug", 
-			"dragon", 
-			"ghost", 
-			"dark", 
-			"steel", 
-			"fairy"
-			]
-
 		document.getElementById("poke_type1").innerHTML = poke_type[0];
 		document.getElementById("poke_type2").innerHTML = poke_type[1] || "";
 		
@@ -385,15 +364,10 @@ function pokemonEntry(poke_name) {
 function showHide() {
 	// Show and hide the right hand menu
 
-	let state = document.getElementById('info_tab').style.display;
-	if (state != 'none') {
-		document.getElementById('info_tab').style.display = "none"
-		document.getElementById('moveset_tab').style.display = "block"
-	} else {
-		document.getElementById('info_tab').style.display = "block"
-		document.getElementById('moveset_tab').style.display = "none"
-	}
-
+	document.getElementById('info_tab').classList.toggle("info-invisible");
+	document.getElementById('moveset_tab').classList.toggle("info-invisible");
+	document.getElementById('info_tab').classList.toggle("info-visible");
+	document.getElementById('moveset_tab').classList.toggle("info-visible");	
 }
 
 
@@ -418,17 +392,16 @@ function searchMoveset() {
 
 		}
 
-
 	}); 
 }
 
 function moveShowStats(move) {
 	// Fills in the move info block 
-	const move_class_css_class = {
-		Physical: "physical",
-		Special: "special",
-		Status: "status"
-	}
+	const move_class_css_class = [
+		"physical",
+		"special",
+		"status"
+	]
 
 	const move_info_ids = [
 		"move_type",
@@ -455,17 +428,18 @@ function moveShowStats(move) {
 			document.getElementById(id).innerHTML = data_list[index];
 		});
 
-		//STYLE - TO BE CHANGED LATER
-		document.getElementById("move_type").style.background = type_colors[data["Type"]];
-		document.getElementById("move_power").style.background = type_colors[data["Type"]];
-		document.getElementById("move_accuracy").style.background = type_colors[data["Type"]];
+		//STYLE
 
-		Object.keys(move_class_css_class).forEach(move_class => {
-			document.getElementById("move_class").classList.remove(move_class.toLowerCase());
+		type_list.forEach(type => {
+			document.getElementById("move_type").classList.toggle(type, type === data["Type"].toLowerCase())
+			document.getElementById("move_power").classList.toggle(type, type === data["Type"].toLowerCase())
+			document.getElementById("move_accuracy").classList.toggle(type, type === data["Type"].toLowerCase())
+		});
+	
+		move_class_css_class.forEach(move_class => {
+			document.getElementById("move_class").classList.toggle(move_class, move_class === data["Class"].toLowerCase());
 		});
 
-		document.getElementById("move_class").classList.add(data["Class"].toLowerCase());
-	
 	});
 }
 
@@ -481,35 +455,34 @@ let next_form_flag = false;		//checks if next form is valid
 let alola_checker = false;		//flag to check if the form is Alolan
 let mega_two = false;			//band-aid for the Y megas			
 let active_pokemon = 1;
+
 const test = [];
 
-changeData(active_pokemon);
-		
-const type_colors = {
-	'Normal': '#a19168',
-	'Fire':'#d13017',
-	'Fighting':'#851504',
-	'Water':'#1c8dd9',
-	'Flying':'#cfecff',
-	'Grass':'#06bf44',
-	'Poison':'#9d25b8',
-	'Electric':'#fff53b',
-	'Ground':'#cf9204',
-	'Psychic':'#c90a80',
-	'Rock':'#7a5b0c',
-	'Ice':'#5bdede',
-	'Bug':'#366301',
-	'Dragon':'#020cd1',
-	'Ghost':'#5d0063',
-	'Dark':'#413442',
-	'Steel':'#ababab',
-	'Fairy':'#ffbdf5',
-	'???':'#758f6f'
-}
+const type_list = [
+	"normal", 
+	"fire", 
+	"fighting", 
+	"water", 
+	"flying", 
+	"grass", 
+	"poison", 
+	"electric", 
+	"ground", 
+	"psychic", 
+	"rock", 
+	"ice", 
+	"bug", 
+	"dragon", 
+	"ghost", 
+	"dark", 
+	"steel", 
+	"fairy"
+	]
 
+changeData(active_pokemon);
 
 $( function() {
-    var pokemon_list = ['Abomasnow', 'Abra', 'Absol', 'Accelgor', 'Aegislash', 'Aerodactyl', 
+    const pokemon_list = ['Abomasnow', 'Abra', 'Absol', 'Accelgor', 'Aegislash', 'Aerodactyl', 
     'Aggron', 'Aipom', 'Alakazam', 'Alcremie', 'Alomomola', 'Altaria', 'Amaura', 'Ambipom', 
     'Amoonguss', 'Ampharos', 'Anorith', 'Araquanid', 'Arbok', 'Arcanine', 'Arceus', 'Archen', 
     'Archeops', 'Ariados', 'Armaldo', 'Aromatisse', 'Aron', 'Articuno', 'Audino', 'Aurorus', 
@@ -622,6 +595,3 @@ $( function() {
       source: pokemon_list
     });
 });
-
-
-
