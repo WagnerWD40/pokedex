@@ -6,6 +6,8 @@ A simple program made in python/javascript with the module Eel for python, just 
 
 I have to do some layout tweaks, like adjusting some buttons and fonts and the layout of the max stats tooltips. I still need to adjust the moveset_db as we have the movesets from Ultra Sun/Moon and Let's Go Pikachu/Eevee unlabeled, I will check and label them properly in the future (or use the ones in the next generation games, maybe).
 
+I still need to refactor a lot of things, add better comments, specially in the CSS file.
+
 Maybe I will update the project to use a real database (mongodb??) or in node.js.
 
 <h2>Resources</h2>
