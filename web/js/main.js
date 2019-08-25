@@ -675,7 +675,7 @@ $( function() {
     'Mienshao', 'Mightyena', 'Milotic', 'Miltank', 'Mime Jr.', 'Mimikyu', 'Minccino', 'Minior', 
     'Minun', 'Misdreavus', 'Mismagius', 'Moltres', 'Monferno', 'Morelull', 'Mothim', 'Mr. Mime', 
     'Mudbray', 'Mudkip', 'Mudsdale', 'Muk', 'Munchlax', 'Munna', 'Murkrow', 'Musharna', 
-    'Naganadel', 'Natu', 'Necrozma', 'Nidoking', 'Nidoqueen', 'Nidoran♀', "Nidoran♂"'Nidorina', 
+    'Naganadel', 'Natu', 'Necrozma', 'Nidoking', 'Nidoqueen', 'Nidoran♀', 'Nidoran♂','Nidorina', 
     'Nidorino', 'Nihilego','Nincada', 'Ninetales', 'Ninjask', 'Noctowl', 'Noibat', 'Noivern', 
     'Nosepass', 'Numel', 
     'Nuzleaf', 'Octillery', 'Oddish', 'Omanyte', 'Omastar', 'Onix', 'Oranguru', 'Oricorio', 
