@@ -2095,7 +2095,7 @@ learnset_db = {
 "Pre-evolution moves alt": [('Bite', 'Dark')],
 "Transfer-only moves alt": [('Body Slam', 'Normal'), ('Counter', 'Fighting'), ('Defense Curl', 'Normal'), ('Double-Edge', 'Normal'), ('Dynamic Punch', 'Fighting'), ('Mega Kick', 'Normal'), ('Mega Punch', 'Normal'), ('Mimic', 'Normal'), ('Psych Up', 'Normal'), ('Seismic Toss', 'Fighting'), ('Avalanche', 'Ice'), ('Captivate', 'Normal'), ('Endure', 'Normal'), ('Natural Gift', 'Normal'), ('Whirlpool', 'Water'), ('Headbutt', 'Normal'), ('Mud-Slap', 'Ground'), ('Rollout', 'Rock'), ('Incinerate', 'Fire'), ('Power-Up Punch', 'Fighting'), ('Retaliate', 'Normal'), ('Rock Smash', 'Fighting'), ('Secret Power', 'Normal'), ('Strength', 'Normal')],
 },
-"Farfetchd": {
+"Farfetch'd": {
 "Moves learnt by level up": [('1', 'Feint'), ('1', 'Leer'), ('1', 'Mirror Move'), ('1', 'Peck'), ('1', 'Poison Jab'), ('1', 'Quick Attack'), ('1', 'Sand Attack'), ('4', 'Focus Energy'), ('9', 'Cut'), ('13', 'Razor Leaf'), ('18', 'Fury Attack'), ('22', 'Agility'), ('27', 'Slash'), ('31', 'Air Slash'), ('36', 'Swords Dance'), ('40', 'Sky Attack')],
 "Moves learnt by TM": [('01', 'Headbutt'), ('03', 'Helping Hand'), ('05', 'Rest'), ('07', 'Protect'), ('08', 'Substitute'), ('09', 'Reflect'), ('12', 'Facade'), ('14', 'Fly'), ('18', 'U-turn'), ('19', 'Iron Tail'), ('26', 'Poison Jab'), ('27', 'Toxic'), ('50', 'Roost')],
 "Moves learnt by level up alt": [('1', 'Brave Bird'), ('1', 'Fury Cutter'), ('1', 'Leer'), ('1', 'Peck'), ('1', 'Poison Jab'), ('1', 'Sand Attack'), ('7', 'Fury Attack'), ('9', 'Aerial Ace'), ('13', 'Knock Off'), ('19', 'Slash'), ('21', 'Air Cutter'), ('25', 'Swords Dance'), ('31', 'Agility'), ('33', 'Night Slash'), ('37', 'Acrobatics'), ('43', 'Feint'), ('45', 'False Swipe'), ('49', 'Air Slash'), ('55', 'Brave Bird')],
@@ -2180,7 +2180,7 @@ learnset_db = {
 "Egg moves alt": [('After You', 'Normal'), ('Agility', 'Psychic'), ('Body Slam', 'Normal'), ('Charge', 'Electric'), ('Eerie Impulse', 'Electric'), ('Electric Terrain', 'Electric'), ('Flatter', 'Dark'), ('Iron Tail', 'Steel'), ('Odor Sleuth', 'Normal'), ('Sand Attack', 'Ground'), ('Screech', 'Normal'), ('Take Down', 'Normal')],
 "Transfer-only moves alt": [('Curse', 'Ghost'), ('Zap Cannon', 'Electric'), ('Counter', 'Fighting'), ('Defense Curl', 'Normal'), ('Double-Edge', 'Normal'), ('Dynamic Punch', 'Fighting'), ('Mega Kick', 'Normal'), ('Mega Punch', 'Normal'), ('Mimic', 'Normal'), ('Seismic Toss', 'Fighting'), ('Captivate', 'Normal'), ('Endure', 'Normal'), ('Natural Gift', 'Normal'), ('Reflect', 'Psychic'), ('Headbutt', 'Normal'), ('Swift', 'Normal'), ('Flash', 'Normal'), ('Power-Up Punch', 'Fighting'), ('Rock Smash', 'Fighting'), ('Secret Power', 'Normal'), ('Strength', 'Normal')],
 },
-"Flabebe": {
+"Flabébé": {
 "Moves learnt by level up": [('1', 'Tackle'), ('1', 'Vine Whip'), ('6', 'Fairy Wind'), ('10', 'Lucky Chant'), ('15', 'Razor Leaf'), ('20', 'Wish'), ('22', 'Magical Leaf'), ('24', 'Grassy Terrain'), ('28', 'Petal Blizzard'), ('33', 'Aromatherapy'), ('37', 'Misty Terrain'), ('41', 'Moonblast'), ('45', 'Petal Dance'), ('48', 'Solar Beam')],
 "Egg moves": [('Camouflage', 'Normal'), ('Captivate', 'Normal'), ('Copycat', 'Normal'), ('Tearful Look', 'Normal')],
 "Move Tutor moves": [('After You', 'Normal'), ('Ally Switch', 'Psychic'), ('Covet', 'Normal'), ('Endeavor', 'Normal'), ('Giga Drain', 'Grass'), ('Heal Bell', 'Normal'), ('Helping Hand', 'Normal'), ('Magic Coat', 'Psychic'), ('Seed Bomb', 'Grass'), ('Snore', 'Normal'), ('Synthesis', 'Grass'), ('Worry Seed', 'Grass')],
