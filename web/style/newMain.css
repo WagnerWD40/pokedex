@@ -1,0 +1,334 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+
+.Background {
+    background-color: #FFF;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.Container {
+    background-color: rgb(235, 65, 65);
+    display: flex;
+    flex: .9;
+    border-radius: 25px;
+    padding: 32px;
+}
+
+.InfoBlock {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 64px 0px 32px;   
+}
+
+.InfoBlock:nth-of-type(2) {
+    padding: 0 32px 0px 64px;   
+}
+
+.Info {
+    background: linear-gradient(to bottom, #a5e6f0, #D2EDF8);
+    margin-bottom: 16px;
+    padding: 8px;
+    box-shadow: 5px 5px rgba(50, 50, 50, 0.2), 5px 5px white inset;
+    border-radius: 18px;
+	border-top: 5px solid black;
+	border-left: 8px solid black;
+	border-right: 8px solid black;
+    border-bottom: 5px solid black;
+    transition: all .3s ease-in-out;
+}
+
+.Info:hover {
+    box-shadow: 5px 5px 3px rgba(34, 2, 0, 0.8); 
+}
+
+.InfoName {
+    display: flex;
+    flex: 2;
+    justify-content: center;
+    align-items: center;
+}
+
+.InfoImage {
+    flex: 7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.InfoTitle {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 32px;
+}
+
+.InfoSearch {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.InfoPokedexEntry {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.InfoControls {
+    display: flex;
+    flex: 4;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.PokemonImage {
+    width: 220px;
+    height: 220px;
+    filter: drop-shadow(5px 5px 3px rgba(34, 2, 0, 0.8)); 
+}
+
+.PokemonName {
+    font-size: 32px;
+}
+
+.PokemonTitle {
+    font-size: 24px;
+}
+
+.SearchInput {
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 0 32px;
+}
+
+.Button {
+    border: none;
+    background: black;
+    color: #FFF;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.TriangularButton {
+    width: 80px;
+    height: auto;
+    filter: drop-shadow(5px 5px 3px rgba(34, 2, 0, 0.8)); 
+}
+
+.Stats {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 16px;
+}
+
+.Stats hr {
+    border: 1px solid #FFF;
+    margin-bottom: 8px;
+}
+
+.StatsBlock {
+    background-color: #FFF;
+    margin-bottom: 16px;
+    border-radius: 25px;
+    padding: 16px;
+}
+
+.StatsTitle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.StatsTitleTitle {
+    font-size: 24px;
+}
+
+.StatsType {
+    display: flex;
+    flex-direction: column;
+    flex: .6;
+}
+
+.StatsAbilities {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.StatsBars {
+    display: flex;
+    flex: 1;
+}
+
+.StatsBlockHeader {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+
+.StatsBlockHeaderText {
+    font-size: 16px;
+}
+
+.Types {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Types li {
+    background-color: rgb(196, 48, 134);
+    font-size: 24px;
+    font-weight: 700;
+    padding: 16px;
+    border-radius: 50px;
+    color: #FFF;
+    box-shadow: 4px 4px 0 rgb(184, 184, 184);
+    text-shadow: 1px 1px 0 rgb(71, 71, 71);
+}
+
+.Abilities {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+}
+
+.StatsAbilities li {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.StatsBars ul{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.StatsBars ul li {
+    display: flex;
+    flex: 1;
+}
+
+.StatsBars ul li span {
+    flex: 1;
+}
+
+.StatsBars ul li span:nth-of-type(2) {
+    text-align: right;
+    padding-right: 16px;
+    flex: .4;
+}
+
+.StatsBars ul li div {
+    flex: 3.5;
+}
+
+.BarBackground {
+    background: linear-gradient(to bottom, #a5e6f0, #D2EDF8);
+    width: 100%;
+    height: 80%;
+    border-radius: 16px;
+}
+
+.Bar {
+    background: linear-gradient(to bottom, rgb(228, 83, 83), #D2EDF8);
+    width: 80%;
+    height: 100%;
+    border-radius: 16px;
+}
+
+/*
+==========================
+TYPE COLORS
+==========================
+*/
+
+.Normal {
+	background-color:  #a19168 !important;
+}
+
+.Fire {
+	background-color: #d13017 !important;
+}
+
+.Fighting {
+	background-color: #851504 !important;
+}
+
+.Water {
+	background-color: #1c8dd9 !important;
+}
+
+.Flying {
+	background-color: #cfecff !important;
+}
+
+.Grass {
+	background-color: #06bf44 !important;
+}
+
+.Poison {
+	background-color: #9d25b8 !important;
+}
+
+.Electric {
+	background-color: #fff53b !important;
+}
+
+.Ground {
+	background-color: #cf9204 !important;
+}
+
+.Psychic {
+	background-color: #c90a80 !important;
+}
+
+.Rock {
+	background-color: #7a5b0c !important;
+}
+
+.Ice {
+	background-color: #5bdede !important;
+}
+
+.Bug {
+	background-color: #366301 !important;
+}
+
+.Dragon {
+	background-color: #020cd1 !important;
+}
+
+.Ghost {
+	background-color: #5d0063 !important;
+}
+
+.Dark {
+	background-color: #413442 !important;
+}
+
+.Steel {
+	background-color: #ababab !important;
+}
+
+.Fairy {
+	background-color: #ffbdf5 !important;
+}
