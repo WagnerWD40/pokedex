@@ -4,7 +4,9 @@
         <meta charset="UTF-8">
         <title>PokeDex</title>
         <script type="text/javascript" src=".\js\newMain.js"></script>
+        <script type="text/javascript" src="/eel.js"></script>
         <link rel="stylesheet" type="text/css" href=".\style\newMain.css">
+        <link rel="stylesheet" type="text/css" href="\style\main.css?<?php echo date('l jS \of F Y h:i:s A'); ?>">
     </head>
     <body>
         <div class="Background">
@@ -26,9 +28,13 @@
                     </div>
                     <div class="Info InfoPokedexEntry">pokedex info carrousel</div>
                     <div class="InfoControls">
-                        <button class="Button">Mega</button>
-                        <img class="TriangularButton" src="button.png">
-                        <img class="TriangularButton" src="button-r.png">
+                        <div class="switch__container">
+                            Mega
+                            <input id="switch-shadow" class="switch switch--shadow" type="checkbox" />
+                            <label for="switch-shadow"></label>
+                        </div>
+                        <img class="TriangularButton LeftButton" src="button.png">
+                        <img class="TriangularButton RightButton" src="button-r.png">
                         <button class="Button">Forms</button>
                     </div>
                 </div>

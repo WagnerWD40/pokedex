@@ -4,6 +4,7 @@ class Pokedex {
         this.image = document.querySelector(".PokemonImage");
         this.number = document.querySelector(".PokemonNumber");
         this.title = document.querySelector(".PokemonTitle");
+        this.pokedexEntry = document.querySelector(".InfoPokedexEntry");
 
         this.types = document.querySelector(".Types");
         this.abilities = document.querySelector(".Abilities");
@@ -40,6 +41,10 @@ class Pokedex {
 
     setImage(image) {
         this.image.src = image;
+    };
+
+    setPokedexEntry(text) {
+        this.pokedexEntry.innerHTML = text;
     };
 
     setTypes(newTypes) {
@@ -82,22 +87,28 @@ class Pokedex {
         this.changeAttribute(this.total, newValue);
     };
 
+    getNumber() {
+        return Number(this.number.innerHTML);
+    };
+
     changeChildren(array, parent, changeStyle = false) {
         while(parent.hasChildNodes()) {
             parent.removeChild(parent.childNodes[0]);
         };
 
         array.forEach(item => {
-            let li = document.createElement("li");
-            let text = document.createTextNode(item);
-
-            li.appendChild(text);
-
-            if (changeStyle) {
-                li.classList.add(item);
+            if (item !== 'NULL') {
+                let li = document.createElement("li");
+                let text = document.createTextNode(item);
+    
+                li.appendChild(text);
+    
+                if (changeStyle) {
+                    li.classList.add(item);
+                };
+                
+                parent.appendChild(li);
             };
-            
-            parent.appendChild(li);
         });        
     };
 
@@ -110,20 +121,82 @@ class Pokedex {
     };
 };
 
-window.onload = function () {
+async function searchByNumber(number, pokedex) {
+    const res =  await eel.search_by_number(number)();
+    loadData(res, pokedex);
+};
+
+function loadData(res, pokedex) {
+    
+    const [
+        number,
+        name,
+        title,
+        type1,
+        type2,
+        ability1,
+        ability2,
+        ability3,
+        hiddenAbility1,
+        hiddenAbility2,
+        hiddenAbility3,
+        hp,
+        attack,
+        defense,
+        spAttack,
+        spDefense,
+        speed,
+        total,
+    ] = res;
+
+    pokedex.setNumber(number);
+    pokedex.setName(name);
+    pokedex.setTitle(title);
+    pokedex.setImage(`.\\imgs\\${name}.png`);
+    pokedex.setTypes([type1, type2]);
+    pokedex.setAbilities([ability1, ability2, ability3]);
+    pokedex.setHiddenAbilities([hiddenAbility1, hiddenAbility2, hiddenAbility3]);
+    pokedex.setHP(hp);
+    pokedex.setAttack(attack);
+    pokedex.setDefense(defense);
+    pokedex.setSpAttack(spAttack);
+    pokedex.setSpDefense(spDefense);
+    pokedex.setSpeed(speed);
+    pokedex.setTotal(total);
+
+    return pokedex;
+}
+
+function rotatePlus(pokedex) {
+    let nextNumber = pokedex.getNumber() + 1;
+
+    if (nextNumber > 809) {
+        nextNumber = 1;
+    };
+
+    searchByNumber(nextNumber, pokedex);
+};
+
+function rotateMinus(pokedex) {
+    let nextNumber = pokedex.getNumber() - 1;
+
+    if (nextNumber < 1) {
+        nextNumber = 809;
+    };
+
+    searchByNumber(nextNumber, pokedex);
+};
+
+const pokedex = window.onload = function () {
     const pokedex = new Pokedex();
 
-    pokedex.setName("Vegitto");
-    pokedex.setImage(".\\imgs\\Pikachu.png");
-    pokedex.setNumber("#099");
-    pokedex.setTitle("Mouse Pokemon");
+    const rightButton = document.querySelector('.RightButton');
+    const leftButton = document.querySelector('.LeftButton');
 
-    pokedex.setTypes(["Fire", "Ground"]);
-
-    pokedex.setAbilities(["Moxie", "Intimidate"]);
-    pokedex.setHiddenAbilities(["Hustle", "Soul Heart"]);
-
-    pokedex.setHP(190);
-    pokedex.setDefense(56);
+    rightButton.addEventListener('click', () => rotatePlus(pokedex));
+    leftButton.addEventListener('click', () => rotateMinus(pokedex));
     
-}
+    searchByNumber(1, pokedex);
+
+    return pokedex;
+};
