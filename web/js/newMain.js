@@ -31,6 +31,11 @@ class Pokedex {
 
         this.alolanFormSwitch = document.querySelector("#switch-shadow-alolan");
         this.hasAlolanForm = false;
+
+        this.leftButton = document.querySelector(".LeftButton");
+        this.rightButton = document.querySelector(".RightButton");
+
+        this.searchInput = document.querySelector(".SearchInput");
     };
 
     setName(name) {
@@ -93,8 +98,30 @@ class Pokedex {
         this.changeAttribute(this.total, newValue);
     };
 
+    setLeftButtonAsPressed() {
+        this.leftButton.classList.add("PressedButton");
+        setTimeout(() => {
+            this.leftButton.classList.remove("PressedButton");
+        }, 200);
+    };
+
+    setRightButtonAsPressed() {
+        this.rightButton.classList.add("PressedButton");
+        setTimeout(() => {
+            this.rightButton.classList.remove("PressedButton");
+        }, 200);
+    };
+
     getNumber() {
         return Number(this.number.innerHTML);
+    };
+
+    getSearchInputValue() {
+        return this.searchInput.value;
+    };
+
+    searchInputClear() {
+        this.searchInput.value = "";
     };
 
     toggleMegaFormSwitchActivity() {
@@ -150,6 +177,15 @@ class Pokedex {
 async function searchByNumber(number, pokedex) {
     const res =  await eel.search_by_number(number)();
     loadData(res, pokedex);
+};
+
+async function searchByName(name, pokedex) {
+    pokedex.searchInputClear();
+    const res = await eel.search_by_name(name)();
+
+    if (res) {
+        loadData(res, pokedex);
+    };
 };
 
 async function getMegaFormData(number, pokedex) {
@@ -222,6 +258,7 @@ function rotatePlus(pokedex, megaSwitch, alolanSwitch) {
     searchByNumber(nextNumber, pokedex);
     megaSwitch.checked = false;
     alolanSwitch.checked = false;
+    pokedex.setRightButtonAsPressed();
 };
 
 function rotateMinus(pokedex, megaSwitch, alolanSwitch) {
@@ -234,6 +271,7 @@ function rotateMinus(pokedex, megaSwitch, alolanSwitch) {
     searchByNumber(nextNumber, pokedex);
     megaSwitch.checked = false;
     alolanSwitch.checked = false;
+    pokedex.setLeftButtonAsPressed();
 };
 
 const pokedex = window.onload = function () {
@@ -243,12 +281,26 @@ const pokedex = window.onload = function () {
     const leftButton = document.querySelector('.LeftButton');
     const megaSwitch = document.querySelector("#switch-shadow-mega");
     const alolanSwitch = document.querySelector("#switch-shadow-alolan");
+    const searchButton = document.querySelector(".SearchButton");
 
     megaSwitch.addEventListener('click', () => getMegaFormData(pokedex.getNumber(), pokedex));
     alolanSwitch.addEventListener('click', () => getAlolanFormData(pokedex.getNumber(), pokedex));
     rightButton.addEventListener('click', () => rotatePlus(pokedex, megaSwitch, alolanSwitch));
     leftButton.addEventListener('click', () => rotateMinus(pokedex, megaSwitch, alolanSwitch));
+    searchButton.addEventListener('click', () => searchByName(pokedex.getSearchInputValue(),pokedex));
     
+    document.addEventListener('keydown', (event) => {
+        const keyName = event.key;
+        if (keyName == "Enter") {
+            searchByName(pokedex.getSearchInputValue(),pokedex);
+        } else if (keyName == "ArrowLeft") {
+            rotateMinus(pokedex, megaSwitch, alolanSwitch);
+        } else if (keyName == "ArrowRight") {
+            rotatePlus(pokedex, megaSwitch, alolanSwitch);
+        };
+
+      });
+
     searchByNumber(1, pokedex);
 
     return pokedex;

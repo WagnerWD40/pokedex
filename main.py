@@ -19,6 +19,20 @@ def search_by_number(number):
 
 
 @eel.expose
+def search_by_name(name):
+
+    name = name.lower()
+
+    cursor.execute(
+        'SELECT * FROM pokemons WHERE lower(name)=lower(?)', (name,)
+    )
+
+    result = cursor.fetchone()
+
+    return list(result) if result else False
+
+
+@eel.expose
 def check_if_has_mega_form(number):
 
     cursor.execute(

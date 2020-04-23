@@ -7,6 +7,15 @@
     color: #333;
 }
 
+*:focus {
+    border: none;
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+}
+
 
 .Background {
     background-color: #FFF;
@@ -19,7 +28,12 @@
 }
 
 .Container {
-    background-color: rgb(235, 65, 65);
+    background: linear-gradient(157deg, rgba(255,123,123,1) 2%, rgba(237,27,27,1) 55%, rgba(215,49,67,1) 82%);
+    box-shadow: 5px 5px rgba(50, 50, 50, 0.2), 5px 5px white inset;
+    border-left: 1px solid rgba(237,27,27,1);
+    border-top: 1px solid rgba(237,27,27,1);
+    border-right: 8px solid rgb(146, 26, 40);
+    border-bottom: 8px solid rgb(146, 26, 40);
     display: flex;
     flex: .9;
     border-radius: 25px;
@@ -160,7 +174,14 @@ GENERAL INFORMATION DISPLAY
 .TriangularButton {
     width: 80px;
     height: auto;
-    filter: drop-shadow(5px 5px 3px rgba(34, 2, 0, 0.8)); 
+    filter: drop-shadow(3px 3px rgba(50, 50, 50, 1)); 
+    transition: all .2s ease;
+    cursor: pointer;
+}
+
+.PressedButton {
+    transform: translate(3px, 3px);
+    filter: none;
 }
 
 /*
