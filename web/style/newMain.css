@@ -91,6 +91,7 @@ GENERAL INFORMATION DISPLAY
     transform-origin: 80% 50%;
     /* transform: rotate(-90deg); */
     overflow: hidden;
+    opacity: .3;
 }
 
 .InfoTitle {
@@ -208,6 +209,11 @@ GENERAL INFORMATION DISPLAY
     border-radius: 50px;
     transition: all 0.4s;
 }
+
+.switch--shadow:disabled + label:before {
+    background-color: red;
+}
+
 .switch--shadow + label:after {
     width: 35px;
     background-color: rgb(81, 123, 240);

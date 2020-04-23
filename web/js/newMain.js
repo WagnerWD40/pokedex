@@ -25,6 +25,12 @@ class Pokedex {
         this.total = document.querySelector(".Total");
 
         this.maxAttributeValue = 200;
+
+        this.megaFormSwitch = document.querySelector("#switch-shadow-mega");
+        this.hasMegaForm = false;
+
+        this.alolanFormSwitch = document.querySelector("#switch-shadow-alolan");
+        this.hasAlolanForm = false;
     };
 
     setName(name) {
@@ -91,6 +97,14 @@ class Pokedex {
         return Number(this.number.innerHTML);
     };
 
+    toggleMegaFormSwitchActivity() {
+        return this.megaFormSwitch.disabled = !this.hasMegaForm;
+    };
+
+    toggleAlolanFormSwitchActivity() {
+        return this.alolanFormSwitch.disabled = !this.hasAlolanForm;
+    };
+
     changeChildren(array, parent, changeStyle = false) {
         while(parent.hasChildNodes()) {
             parent.removeChild(parent.childNodes[0]);
@@ -126,7 +140,17 @@ async function searchByNumber(number, pokedex) {
     loadData(res, pokedex);
 };
 
-function loadData(res, pokedex) {
+async function getMegaFormData(number, pokedex) {
+    const res = await eel.get_mega_form(number)();
+    loadData(res, pokedex);
+};
+
+async function getAlolanFormData(number, pokedex) {
+    const res = await eel.get_alolan_form(number)();
+    loadData(res, pokedex);
+};
+
+async function loadData(res, pokedex) {
     
     const [
         number,
@@ -164,10 +188,16 @@ function loadData(res, pokedex) {
     pokedex.setSpeed(speed);
     pokedex.setTotal(total);
 
-    return pokedex;
-}
+    pokedex.hasMegaForm = await eel.check_if_has_mega_form(number)();
+    pokedex.hasAlolanForm = await eel.check_if_has_alolan_form(number)();
+    
+    pokedex.toggleMegaFormSwitchActivity();
+    pokedex.toggleAlolanFormSwitchActivity();
 
-function rotatePlus(pokedex) {
+    return pokedex;
+};
+
+function rotatePlus(pokedex, megaSwitch, alolanSwitch) {
     let nextNumber = pokedex.getNumber() + 1;
 
     if (nextNumber > 809) {
@@ -175,9 +205,11 @@ function rotatePlus(pokedex) {
     };
 
     searchByNumber(nextNumber, pokedex);
+    megaSwitch.checked = false;
+    alolanSwitch.checked = false;
 };
 
-function rotateMinus(pokedex) {
+function rotateMinus(pokedex, megaSwitch, alolanSwitch) {
     let nextNumber = pokedex.getNumber() - 1;
 
     if (nextNumber < 1) {
@@ -185,6 +217,8 @@ function rotateMinus(pokedex) {
     };
 
     searchByNumber(nextNumber, pokedex);
+    megaSwitch.checked = false;
+    alolanSwitch.checked = false;
 };
 
 const pokedex = window.onload = function () {
@@ -192,9 +226,13 @@ const pokedex = window.onload = function () {
 
     const rightButton = document.querySelector('.RightButton');
     const leftButton = document.querySelector('.LeftButton');
+    const megaSwitch = document.querySelector("#switch-shadow-mega");
+    const alolanSwitch = document.querySelector("#switch-shadow-alolan");
 
-    rightButton.addEventListener('click', () => rotatePlus(pokedex));
-    leftButton.addEventListener('click', () => rotateMinus(pokedex));
+    megaSwitch.addEventListener('click', () => getMegaFormData(pokedex.getNumber(), pokedex));
+    alolanSwitch.addEventListener('click', () => getAlolanFormData(pokedex.getNumber(), pokedex));
+    rightButton.addEventListener('click', () => rotatePlus(pokedex, megaSwitch, alolanSwitch));
+    leftButton.addEventListener('click', () => rotateMinus(pokedex, megaSwitch, alolanSwitch));
     
     searchByNumber(1, pokedex);
 
