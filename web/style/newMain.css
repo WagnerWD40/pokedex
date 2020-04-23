@@ -124,8 +124,8 @@ GENERAL INFORMATION DISPLAY
 }
 
 .PokemonImage {
-    width: 160px;
     height: 160px;
+    width: auto;
     filter: drop-shadow(5px 5px 3px rgba(34, 2, 0, 0.8)); 
 }
 
@@ -451,4 +451,49 @@ TYPE COLORS
 
 .Fairy {
 	background-color: #ffbdf5 !important;
+}
+
+/*
+    TOOLTIP
+*/
+
+.TooltipParent {
+    position: relative;
+    display: inline-block;
+}
+
+.TooltipParent .Tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background: linear-gradient(to bottom, #a5e6f0, #D2EDF8);
+    color: #444;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 5px 5px rgba(50, 50, 50, 0.2), 5px 5px white inset;
+    border-radius: 18px;
+    border-radius: 6px;
+    padding: 8px 16px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.TooltipParent .Tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #D2EDF8 transparent transparent transparent;
+}
+
+.TooltipParent:hover .Tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

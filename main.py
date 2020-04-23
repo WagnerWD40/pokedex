@@ -87,6 +87,34 @@ def get_alolan_form(number):
 
     return list(cursor.fetchone())
 
+
+@eel.expose
+def get_pokedex_entry(number):
+
+    cursor.execute(
+        """
+            SELECT entry FROM pokemon_entries
+            INNER JOIN pokemons ON pokemon_entries.pokemon_id = pokemons.id
+            WHERE pokemons.id=?
+            ORDER BY random() LIMIT 1;
+        """, (number,)
+    )
+
+    return list(cursor.fetchone())
+
+
+@eel.expose
+def get_ability_description(ability):
+
+    cursor.execute(
+        """
+            SELECT description FROM pokemon_abilities
+            WHERE name=?;
+        """, (ability,)
+    )
+
+    return list(cursor.fetchone())
+
 eel.start('newMain.html', size=(1600, 1000), mode='chrome-app', options={'chromeFlags': ['--disable-http-cache']})
 
 connection.close()

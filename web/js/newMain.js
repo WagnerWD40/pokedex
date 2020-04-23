@@ -110,11 +110,23 @@ class Pokedex {
             parent.removeChild(parent.childNodes[0]);
         };
 
-        array.forEach(item => {
+        array.forEach(async item => {
             if (item !== 'NULL') {
                 let li = document.createElement("li");
                 let text = document.createTextNode(item);
+
+                if (!changeStyle) {
+                    let tooltip = document.createElement("span");
+                    let tooltipContent = await eel.get_ability_description(item)();
+                    let tooltipText = document.createTextNode(tooltipContent);
     
+                    tooltip.classList.add("Tooltiptext");
+                    tooltip.appendChild(tooltipText);
+                    
+                    li.classList.add("TooltipParent");
+                    li.appendChild(tooltip);
+                };
+
                 li.appendChild(text);
     
                 if (changeStyle) {
@@ -188,6 +200,9 @@ async function loadData(res, pokedex) {
     pokedex.setSpeed(speed);
     pokedex.setTotal(total);
 
+    const randomPokedexEntry = await eel.get_pokedex_entry(number)();
+    pokedex.setPokedexEntry(randomPokedexEntry);
+
     pokedex.hasMegaForm = await eel.check_if_has_mega_form(number)();
     pokedex.hasAlolanForm = await eel.check_if_has_alolan_form(number)();
     
@@ -238,3 +253,4 @@ const pokedex = window.onload = function () {
 
     return pokedex;
 };
+
