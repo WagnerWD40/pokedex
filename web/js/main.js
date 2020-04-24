@@ -294,7 +294,7 @@ function dexRotate(direction) {
 	}
 	
 	document.getElementById(button).style.transform = 'translate3d(3px, 3px, 0px)';
-	active_pokemon = Number(active_pokemon);
+	active_pokemon = Number(active_pokemon);	
 	active_pokemon += number;
 	
 	if (active_pokemon < 1) {

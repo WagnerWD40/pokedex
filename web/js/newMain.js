@@ -4,7 +4,7 @@ class Pokedex {
         this.image = document.querySelector(".PokemonImage");
         this.number = document.querySelector(".PokemonNumber");
         this.title = document.querySelector(".PokemonTitle");
-        this.pokedexEntry = document.querySelector(".InfoPokedexEntry");
+        this.pokedexEntry = document.querySelector(".EntryText");
 
         this.types = document.querySelector(".Types");
         this.abilities = document.querySelector(".Abilities");
@@ -169,7 +169,22 @@ class Pokedex {
         attribute.innerHTML = newValue;
 
         if (attributeBar) {
-            attributeBar.style.width = `${100 * newValue / this.maxAttributeValue}%`
+
+            let barSize = 100 * newValue / this.maxAttributeValue;
+            barSize = barSize > 100 ? 100 : barSize;
+
+            attributeBar.style.width = `${barSize}%`;
+            console.log(barSize);
+
+            if (barSize >= this.maxAttributeValue / 4) {
+                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(124, 255, 227) 0%, rgb(16, 224, 44) 100%)';
+            } else if (barSize >= this.maxAttributeValue / 5 && barSize < this.maxAttributeValue / 4) {
+                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(201, 253, 152) 0%, rgb(220, 224, 16) 100%)';
+            } else if (barSize >= this.maxAttributeValue / 7 && barSize < this.maxAttributeValue / 5) {
+                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(255, 254, 172) 0%, rgb(255, 230, 4) 100%)';
+            } else {
+                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(253, 209, 152) 0%, rgb(224, 23, 16) 100%)';
+            };
         };
     };
 };
@@ -283,8 +298,21 @@ const pokedex = window.onload = function () {
     const alolanSwitch = document.querySelector("#switch-shadow-alolan");
     const searchButton = document.querySelector(".SearchButton");
 
-    megaSwitch.addEventListener('click', () => getMegaFormData(pokedex.getNumber(), pokedex));
-    alolanSwitch.addEventListener('click', () => getAlolanFormData(pokedex.getNumber(), pokedex));
+    megaSwitch.addEventListener('change', () => {
+        if (megaSwitch.checked) {
+            getMegaFormData(pokedex.getNumber(), pokedex);
+        } else {
+            searchByNumber(pokedex.getNumber(), pokedex);
+        };
+    });
+    alolanSwitch.addEventListener('change', () => {
+        if (alolanSwitch.checked) {
+            getAlolanFormData(pokedex.getNumber(), pokedex);
+        } else {
+            searchByNumber(pokedex.getNumber(), pokedex);
+        };
+    });
+
     rightButton.addEventListener('click', () => rotatePlus(pokedex, megaSwitch, alolanSwitch));
     leftButton.addEventListener('click', () => rotateMinus(pokedex, megaSwitch, alolanSwitch));
     searchButton.addEventListener('click', () => searchByName(pokedex.getSearchInputValue(),pokedex));

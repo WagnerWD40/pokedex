@@ -12,6 +12,10 @@
     outline: none;
 }
 
+body {
+    overflow: hidden;
+}
+
 button {
     cursor: pointer;
 }
@@ -38,6 +42,7 @@ button {
     flex: .9;
     border-radius: 25px;
     padding: 32px;
+    overflow: hidden;
 }
 
 .InfoBlock {
@@ -128,6 +133,31 @@ GENERAL INFORMATION DISPLAY
     flex: 1;
     justify-content: center;
     align-items: center;
+    padding: 8px;
+    max-height: 60px;
+}
+
+.FadingBox {
+    max-height: 95%;
+    overflow: hidden;
+    margin: 0 4px;
+}
+
+.EntryText {
+    animation: scroll 10s infinite;
+    position: relative;
+    top: 0;
+    text-align: justify;
+    line-height: 1.5em;
+}
+
+@keyframes scroll {
+    0% {
+        top: 50px;
+    }
+    100% {
+        top: -80px;
+    }
 }
 
 .InfoControls {
@@ -164,11 +194,15 @@ GENERAL INFORMATION DISPLAY
 }
 
 .Button {
-    border: none;
     background: black;
     color: #FFF;
     padding: 8px;
     border-radius: 8px;
+    box-shadow: 5px 5px rgba(50, 50, 50, 0.2), 2px 2px white inset;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: none;
+    border-bottom: none;
 }
 
 .TriangularButton {
@@ -232,23 +266,86 @@ GENERAL INFORMATION DISPLAY
 }
 
 .switch--shadow:disabled + label:before {
-    background-color: red;
+    background-color: #eee;
+}
+
+#switch-shadow-mega + label:after {
+    background: url("..\\images\\megastone.png");
+
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#switch-shadow-alolan + label:after {
+    background: url("..\\images\\alolaicon.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .switch--shadow + label:after {
+
+    opacity: .5;
     width: 35px;
-    background-color: rgb(81, 123, 240);
     border-radius: 100%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 2px solid black;
+    animation: glow .6s alternate infinite;
     transition: all 0.4s;
 }
 
+@keyframes glow {
+    0% {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 15px rgba(255, 255, 255, 1);
+    }
+
+    100% {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 0 rgba(255, 255, 255, .4);
+    }
+}
+
+.switch--shadow:disabled + label:after {
+    box-shadow: none;
+    animation: none;
+    background-color: #eee;
+    opacity: .2;   
+}
+
 .switch--shadow:checked + label:before {
-    background-color: #8adafa;
+    background-color: #FFF;
 }
 
 .switch--shadow:checked + label:after {
+    animation: rainbowGlow 4s alternate infinite;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 10px rgba(180, 3, 250, .6);
     transform: translateX(36px);
+    background-color: #FFF;
+    opacity: .8;
+}
+
+@keyframes rainbowGlow {
+    0% {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 10px rgb(250, 3, 229);
+    }
+
+    20% {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 10px rgba(250, 3, 15, .8);
+    }
+
+    40% {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 10px rgb(250, 246, 3);
+    }
+
+    60% {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 10px rgba(32, 250, 3, .6);
+    }
+    
+    80% {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 10px rgb(3, 250, 217);
+    }
+    
+    10% {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 10px 10px rgba(3, 19, 250, .7);
+    }
 }
 /*
 ==========================
