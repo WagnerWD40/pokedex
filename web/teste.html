@@ -5,17 +5,29 @@
         <script>
             function expand() {
                 const info = document.querySelector(".Info");
+                
                 info.classList.toggle("Expand");
                 info.classList.toggle("Detract");
+            };
+
+            function rotate() {
+                const note = document.querySelector(".Note");
+
+                note.classList.toggle("Rotate");
+                note.classList.toggle("RotateBack");
             }
         </script>
     </head>
     <body>
         <div class="Container">
             <button onclick="expand()">expand</button>
+            <button onclick="rotate()">rotate</button>
             <div class="Info Detract">
 
-            </div>  
+            </div>
+            <div class="Note RotateBack">
+
+            </div>
         </div>
 
     </body>

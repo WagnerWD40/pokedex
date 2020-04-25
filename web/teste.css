@@ -16,6 +16,7 @@ body {
 }
 
 .Container {
+    position: relative;
     display: flex;
     height: 90%;
     flex: .4;
@@ -58,5 +59,45 @@ body {
 
     to {
         transform: translateX(0px);
+    }
+}
+
+
+.Note {
+    position: absolute;
+    left: -100px;
+    top: 120px;
+    width: 25%;
+    height: 10%;
+    background-color: rgb(255, 0, 242);
+    border-radius: 25px;
+    transform: rotateZ(90deg);
+    transform-origin: right;
+    z-index: -1;
+}
+
+.Rotate {
+    animation: rotateNote .4s ease forwards;
+}
+
+.RotateBack {
+    animation: rotateBack .4s ease forwards;
+}
+
+@keyframes rotateNote {
+    from {
+        transform: rotateZ(90deg);
+    }
+    to {
+        transform: rotateZ(0);        
+    }
+}
+
+@keyframes rotateBack {
+    from {
+        transform: rotateZ(0);
+    }
+    to {
+        transform: rotateZ(90deg);        
     }
 }

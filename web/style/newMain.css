@@ -20,14 +20,15 @@ button {
     cursor: pointer;
 }
 
-
 .Background {
+    position: sticky;
     background-color: #FFF;
     width: 100vw;
     height: 100vh;
     display: flex;
     flex: 1;
     justify-content: center;
+    align-items: center;
     padding: 20px;
 }
 
@@ -39,11 +40,12 @@ button {
     border-right: 8px solid rgb(146, 26, 40);
     border-bottom: 8px solid rgb(146, 26, 40);
     display: flex;
-    flex: .9;
+    flex: 1;
     border-radius: 25px;
-    padding: 32px;
-    overflow: hidden;
-
+    padding: 24px;
+    justify-content: center;
+    position: fixed;
+    max-width: 460px;
 }
 
 .Test {
@@ -54,12 +56,45 @@ button {
 .InfoBlock {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding: 0 64px 0px 32px;   
+    flex: .9;
 }
 
-.InfoBlock:nth-of-type(2) {
-    padding: 0 32px 0px 64px;   
+.Details {
+    display: flex;
+    flex-direction: column;
+    flex: .4;
+    height: 95%;
+    max-width: 40%;
+    transform: translateX(460px);
+    z-index: -1;
+}
+
+.Open {
+    animation: open 1s ease forwards;
+}
+
+.Close {
+    animation: close 1s ease forwards;
+}
+
+@keyframes open {
+    from {
+        transform: translateX(20px);
+    }
+
+    to {
+        transform: translateX(455px);
+    }
+}
+
+@keyframes close {
+    from {
+        transform: translateX(455px);
+    }
+
+    to {
+        transform: translateX(20px);
+    }
 }
 
 .Info {
@@ -277,19 +312,20 @@ GENERAL INFORMATION DISPLAY
 
 #switch-shadow-mega + label:after {
     background: url("..\\images\\megastone.png");
-
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 #switch-shadow-alolan + label:after {
     background: url("..\\images\\alolaicon.png");
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid #de7600;
 }
 
 .switch--shadow + label:after {
-
     opacity: .5;
     width: 35px;
     border-radius: 100%;
@@ -363,7 +399,8 @@ STATUS DISPLAY
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 8px;
+    padding: 16px;
+    width: 80%;
 }
 
 .Stats hr {
@@ -480,7 +517,7 @@ STATUS DISPLAY
 }
 
 .StatsBars ul li div {
-    flex: 3.5;
+    flex: 3.1;
 }
 
 .BarBackground {

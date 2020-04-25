@@ -36,6 +36,7 @@ class Pokedex {
         this.rightButton = document.querySelector(".RightButton");
 
         this.searchInput = document.querySelector(".SearchInput");
+        this.detailsWindow = document.querySelector(".Details");
     };
 
     setName(name) {
@@ -289,6 +290,12 @@ function rotateMinus(pokedex, megaSwitch, alolanSwitch) {
     pokedex.setLeftButtonAsPressed();
 };
 
+function toggleStatsWindow(pokedex) {
+    
+    pokedex.detailsWindow.classList.toggle('Open');
+    pokedex.detailsWindow.classList.toggle('Close');
+};
+
 const pokedex = window.onload = function () {
     const pokedex = new Pokedex();
 
@@ -317,6 +324,7 @@ const pokedex = window.onload = function () {
     rightButton.addEventListener('click', () => rotatePlus(pokedex, megaSwitch, alolanSwitch));
     leftButton.addEventListener('click', () => rotateMinus(pokedex, megaSwitch, alolanSwitch));
     searchButton.addEventListener('click', () => searchByName(pokedex.getSearchInputValue(),pokedex));
+    formsButton.addEventListener('click', () => this.toggleStatsWindow(pokedex));
     
     document.addEventListener('keydown', (event) => {
         const keyName = event.key;
@@ -327,7 +335,6 @@ const pokedex = window.onload = function () {
         } else if (keyName == "ArrowRight") {
             rotatePlus(pokedex, megaSwitch, alolanSwitch);
         };
-
       });
 
     searchByNumber(1, pokedex);
