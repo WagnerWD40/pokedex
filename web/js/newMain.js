@@ -297,6 +297,7 @@ const pokedex = window.onload = function () {
     const megaSwitch = document.querySelector("#switch-shadow-mega");
     const alolanSwitch = document.querySelector("#switch-shadow-alolan");
     const searchButton = document.querySelector(".SearchButton");
+    const formsButton = document.querySelector(".FormsButton");
 
     megaSwitch.addEventListener('change', () => {
         if (megaSwitch.checked) {

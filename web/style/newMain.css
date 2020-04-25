@@ -43,6 +43,12 @@ button {
     border-radius: 25px;
     padding: 32px;
     overflow: hidden;
+
+}
+
+.Test {
+    opacity: 0 !important;
+    transition: all .3s ease-in-out;
 }
 
 .InfoBlock {

@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.Container {
+    display: flex;
+    height: 90%;
+    flex: .4;
+    background-color: red;
+    align-items: center;
+    border-radius: 25px;
+}
+
+.Info {
+    position: relative;
+    width: 80%;
+    height: 95%;
+    background-color: aquamarine;
+    z-index: -1;
+    border-radius: 25px;
+}
+
+.Expand {
+    animation: open 1s ease forwards;
+}
+
+.Detract {
+    animation: close 1s ease forwards;
+}
+
+@keyframes open {
+    from {
+        transform: translateX(0px);
+    }
+
+    to {
+        transform: translateX(500px);
+    }
+}
+
+@keyframes close {
+    from {
+        transform: translateX(500px);
+    }
+
+    to {
+        transform: translateX(0px);
+    }
+}
