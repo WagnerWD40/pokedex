@@ -175,8 +175,8 @@ class Pokedex {
                 const input = document.createElement("input");
                 input.type = "radio";
                 input.name = "form";
+                input.onclick = () => loadAlternateFormData(item[1], this);
                 
-
                 const span = document.createElement("span");
                 const spanContent = document.createTextNode(formName);
                 span.appendChild(spanContent);
@@ -186,6 +186,22 @@ class Pokedex {
 
                 ul.appendChild(li);
         });
+
+        const li = document.createElement("li");
+                
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "form";
+        input.onclick = () => searchByNumber(this.getNumber(), this);
+        
+        const span = document.createElement("span");
+        const spanContent = document.createTextNode("Common Form");
+        span.appendChild(spanContent);
+
+        li.appendChild(input);
+        li.appendChild(span);
+
+        ul.appendChild(li);
 
         this.formList.appendChild(ul);
        };
@@ -276,6 +292,57 @@ async function getAlolanFormData(number, pokedex) {
 async function getAlternateFormData(number, pokedex) {
     const res = await eel.get_alternate_forms(number)();
     pokedex.populateFormList(res);
+
+    return res ? true : false;
+};
+
+async function loadAlternateFormData(formName, pokedex) {
+
+    const res = await eel.get_specific_alternate_form(formName)();
+
+    const [
+        number,
+        name,
+        title,
+        type1,
+        type2,
+        ability1,
+        ability2,
+        ability3,
+        hiddenAbility1,
+        hiddenAbility2,
+        hiddenAbility3,
+        hp,
+        attack,
+        defense,
+        spAttack,
+        spDefense,
+        speed,
+        total,
+    ] = res;
+
+    console.log(name);
+
+    pokedex.setNumber(number);
+    pokedex.setTitle(title);
+    pokedex.setImage(`.\\imgs\\${name}.png`);
+    pokedex.setTypes([type1, type2]);
+
+    if (![ability1, ability2, ability3].every(ability => ability === 'NULL')) {
+        pokedex.setAbilities([ability1, ability2, ability3]);
+    };
+
+    if (![hiddenAbility1, hiddenAbility2, hiddenAbility3].every(ability => ability === 'NULL')) {
+        pokedex.setHiddenAbilities([hiddenAbility1, hiddenAbility2, hiddenAbility3]);
+    };
+    
+    pokedex.setHP(hp);
+    pokedex.setAttack(attack);
+    pokedex.setDefense(defense);
+    pokedex.setSpAttack(spAttack);
+    pokedex.setSpDefense(spDefense);
+    pokedex.setSpeed(speed);
+    pokedex.setTotal(total);
 };
 
 async function loadData(res, pokedex) {
@@ -327,9 +394,11 @@ async function loadData(res, pokedex) {
     pokedex.toggleAlolanFormSwitchActivity();
     pokedex.toggleAlternateFormButtonActivity();
 
-    if (pokedex.formList.classList.contains("OpenFormList")) {
+    if (!pokedex.hasAlternateForm && pokedex.formList.classList.contains("OpenFormList") ) {
         toggleFormList(pokedex);
-    }
+        
+        return pokedex;
+    };
 
     getAlternateFormData(number, pokedex);
 
