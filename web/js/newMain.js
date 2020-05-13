@@ -32,11 +32,16 @@ class Pokedex {
         this.alolanFormSwitch = document.querySelector("#switch-shadow-alolan");
         this.hasAlolanForm = false;
 
+        this.alternateFormButton = document.querySelector(".FormsButton");
+        this.hasAlternateForm = false;
+
         this.leftButton = document.querySelector(".LeftButton");
         this.rightButton = document.querySelector(".RightButton");
 
         this.searchInput = document.querySelector(".SearchInput");
         this.detailsWindow = document.querySelector(".Details");
+
+        this.formList = document.querySelector(".FormList");
     };
 
     setName(name) {
@@ -117,6 +122,10 @@ class Pokedex {
         return Number(this.number.innerHTML);
     };
 
+    getName() {
+        return this.name.innerHTML;
+    };
+
     getSearchInputValue() {
         return this.searchInput.value;
     };
@@ -133,7 +142,58 @@ class Pokedex {
         return this.alolanFormSwitch.disabled = !this.hasAlolanForm;
     };
 
+    toggleAlternateFormButtonActivity() {
+        return this.alternateFormButton.disabled = !this.hasAlternateForm;
+    };
+
+    populateFormList(formsArray) {
+        /*
+        Creates the following HTML structure
+
+        <li>
+            <input type="radio" name="form1" />
+            <span>Form 1</span>
+        </li>
+
+        for each item in formsArray and append it to formList
+        */
+       console.log(formsArray);
+
+        while(this.formList.hasChildNodes()) {
+            this.formList.removeChild(this.formList.childNodes[0]);
+        };
+
+        if (formsArray) {
+
+            const ul = document.createElement("ul");
+
+            formsArray.forEach(item => {
+                const formName = item[1].substring(this.getName().length + 1, item[1].length);
+
+                const li = document.createElement("li");
+                
+                const input = document.createElement("input");
+                input.type = "radio";
+                input.name = "form";
+                
+
+                const span = document.createElement("span");
+                const spanContent = document.createTextNode(formName);
+                span.appendChild(spanContent);
+
+                li.appendChild(input);
+                li.appendChild(span);
+
+                ul.appendChild(li);
+        });
+
+        this.formList.appendChild(ul);
+       };
+        
+    };
+
     changeChildren(array, parent, changeStyle = false) {
+        
         while(parent.hasChildNodes()) {
             parent.removeChild(parent.childNodes[0]);
         };
@@ -175,7 +235,6 @@ class Pokedex {
             barSize = barSize > 100 ? 100 : barSize;
 
             attributeBar.style.width = `${barSize}%`;
-            console.log(barSize);
 
             if (barSize >= this.maxAttributeValue / 4) {
                 attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(124, 255, 227) 0%, rgb(16, 224, 44) 100%)';
@@ -212,6 +271,11 @@ async function getMegaFormData(number, pokedex) {
 async function getAlolanFormData(number, pokedex) {
     const res = await eel.get_alolan_form(number)();
     loadData(res, pokedex);
+};
+
+async function getAlternateFormData(number, pokedex) {
+    const res = await eel.get_alternate_forms(number)();
+    pokedex.populateFormList(res);
 };
 
 async function loadData(res, pokedex) {
@@ -257,9 +321,17 @@ async function loadData(res, pokedex) {
 
     pokedex.hasMegaForm = await eel.check_if_has_mega_form(number)();
     pokedex.hasAlolanForm = await eel.check_if_has_alolan_form(number)();
+    pokedex.hasAlternateForm = await eel.check_if_has_alternate_form(number)();
     
     pokedex.toggleMegaFormSwitchActivity();
     pokedex.toggleAlolanFormSwitchActivity();
+    pokedex.toggleAlternateFormButtonActivity();
+
+    if (pokedex.formList.classList.contains("OpenFormList")) {
+        toggleFormList(pokedex);
+    }
+
+    getAlternateFormData(number, pokedex);
 
     return pokedex;
 };
@@ -290,11 +362,15 @@ function rotateMinus(pokedex, megaSwitch, alolanSwitch) {
     pokedex.setLeftButtonAsPressed();
 };
 
-function toggleStatsWindow(pokedex) {
-    
+function toggleStatsWindow(pokedex) {   
     pokedex.detailsWindow.classList.toggle('Open');
     pokedex.detailsWindow.classList.toggle('Close');
 };
+
+function toggleFormList(pokedex) {
+    pokedex.formList.classList.toggle('OpenFormList');
+    pokedex.formList.classList.toggle('CloseFormList');
+}
 
 const pokedex = window.onload = function () {
     const pokedex = new Pokedex();
@@ -304,6 +380,7 @@ const pokedex = window.onload = function () {
     const megaSwitch = document.querySelector("#switch-shadow-mega");
     const alolanSwitch = document.querySelector("#switch-shadow-alolan");
     const searchButton = document.querySelector(".SearchButton");
+    const statusButton = document.querySelector(".StatusButton");
     const formsButton = document.querySelector(".FormsButton");
 
     megaSwitch.addEventListener('change', () => {
@@ -313,6 +390,7 @@ const pokedex = window.onload = function () {
             searchByNumber(pokedex.getNumber(), pokedex);
         };
     });
+
     alolanSwitch.addEventListener('change', () => {
         if (alolanSwitch.checked) {
             getAlolanFormData(pokedex.getNumber(), pokedex);
@@ -324,7 +402,8 @@ const pokedex = window.onload = function () {
     rightButton.addEventListener('click', () => rotatePlus(pokedex, megaSwitch, alolanSwitch));
     leftButton.addEventListener('click', () => rotateMinus(pokedex, megaSwitch, alolanSwitch));
     searchButton.addEventListener('click', () => searchByName(pokedex.getSearchInputValue(),pokedex));
-    formsButton.addEventListener('click', () => this.toggleStatsWindow(pokedex));
+    statusButton.addEventListener('click', () => toggleStatsWindow(pokedex));
+    formsButton.addEventListener('click', () => toggleFormList(pokedex));
     
     document.addEventListener('keydown', (event) => {
         const keyName = event.key;

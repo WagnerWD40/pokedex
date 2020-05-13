@@ -1,3 +1,11 @@
+:root {
+    --translateOpen: 85px;
+    --translateClosed: 530px;
+
+    --translateOpenFormList: translateX(-520px);
+    --translateClosedFormList: translateX(-300px);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -62,10 +70,10 @@ button {
 .Details {
     display: flex;
     flex-direction: column;
-    flex: .4;
+    flex: .7;
     height: 95%;
     max-width: 40%;
-    transform: translateX(460px);
+    transform: translateX(var(--translateClosed));
     z-index: -1;
 }
 
@@ -79,21 +87,70 @@ button {
 
 @keyframes open {
     from {
-        transform: translateX(20px);
+        transform: translateX(var(--translateOpen));
     }
 
     to {
-        transform: translateX(455px);
+        transform: translateX(var(--translateClosed));
     }
 }
 
 @keyframes close {
     from {
-        transform: translateX(455px);
+        transform: translateX(var(--translateClosed));
     }
 
     to {
-        transform: translateX(20px);
+        transform: translateX(var(--translateOpen));
+    }
+}
+
+.FormList {
+    flex: .3;
+    max-width: 150px;
+    background: linear-gradient(157deg, rgba(255,123,123,1) 2%, rgba(237,27,27,1) 55%, rgba(215,49,67,1) 82%);
+    box-shadow: 5px 5px rgba(50, 50, 50, 0.2), 5px 5px white inset;
+    border-left: 1px solid rgba(237,27,27,1);
+    border-top: 1px solid rgba(237,27,27,1);
+    border-right: 8px solid rgb(146, 26, 40);
+    border-bottom: 8px solid rgb(146, 26, 40);
+    position: relative;
+    display: flex;
+    transform: var(--translateOpenFormList);
+    padding: 16px;
+    border-radius: 25px;
+    z-index: -2;
+}
+
+.FormList span {
+    font-size: 12px;
+}
+
+.OpenFormList {
+    animation: openFormList 1s ease forwards;
+}
+
+.CloseFormList {
+    animation: closeFormList 1s ease forwards;
+}
+
+@keyframes openFormList {
+    from {
+        transform: var(--translateClosedFormList);
+    }
+
+    to {
+        transform: var(--translateOpenFormList);
+    }
+}
+
+@keyframes closeFormList {
+    from {
+        transform: var(--translateOpenFormList);
+    }
+
+    to {
+        transform: var(--translateClosedFormList);
     }
 }
 
@@ -208,6 +265,11 @@ GENERAL INFORMATION DISPLAY
     align-items: center;
 }
 
+.ButtonConsole {
+    display: flex;
+    flex-direction: column;
+}
+
 .PokemonImage {
     height: 160px;
     width: auto;
@@ -252,6 +314,10 @@ GENERAL INFORMATION DISPLAY
     filter: drop-shadow(3px 3px rgba(50, 50, 50, 1)); 
     transition: all .2s ease;
     cursor: pointer;
+}
+
+.FormsButton:disabled{
+    background-color: blueviolet !important;
 }
 
 .PressedButton {
