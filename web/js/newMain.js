@@ -39,9 +39,10 @@ class Pokedex {
         this.rightButton = document.querySelector(".RightButton");
 
         this.searchInput = document.querySelector(".SearchInput");
-        this.detailsWindow = document.querySelector(".Details");
 
-        this.formList = document.querySelector(".FormList");
+        this.detailsWindow = new Display(document.querySelector(".Details"), 'Open', 'Close');
+
+        this.formList = new Display(document.querySelector(".FormList"), "OpenFormList", "CloseFormList");
     };
 
     setName(name) {
@@ -60,8 +61,8 @@ class Pokedex {
         this.image.src = image;
     };
 
-    setPokedexEntry(text) {
-        this.pokedexEntry.innerHTML = text;
+    async setPokedexEntry() {
+        this.pokedexEntry.innerHTML = await eel.get_pokedex_entry(this.getNumber())();
     };
 
     setTypes(newTypes) {
@@ -157,10 +158,9 @@ class Pokedex {
 
         for each item in formsArray and append it to formList
         */
-       console.log(formsArray);
 
-        while(this.formList.hasChildNodes()) {
-            this.formList.removeChild(this.formList.childNodes[0]);
+        while(this.formList.getHtmlElement().hasChildNodes()) {
+            this.formList.getHtmlElement().removeChild(this.formList.getHtmlElement().childNodes[0]);
         };
 
         if (formsArray) {
@@ -192,7 +192,7 @@ class Pokedex {
         const input = document.createElement("input");
         input.type = "radio";
         input.name = "form";
-        input.onclick = () => searchByNumber(this.getNumber(), this);
+        input.onclick = () => this.searchByNumber(this.getNumber(), this);
         
         const span = document.createElement("span");
         const spanContent = document.createTextNode("Common Form");
@@ -203,7 +203,7 @@ class Pokedex {
 
         ul.appendChild(li);
 
-        this.formList.appendChild(ul);
+        this.formList.getHtmlElement().appendChild(ul);
        };
         
     };
@@ -263,30 +263,132 @@ class Pokedex {
             };
         };
     };
-};
 
-async function searchByNumber(number, pokedex) {
-    const res =  await eel.search_by_number(number)();
-    loadData(res, pokedex);
-};
+    async updatePokemonData(data) {
 
-async function searchByName(name, pokedex) {
-    pokedex.searchInputClear();
-    const res = await eel.search_by_name(name)();
+        const [
+            number,
+            name,
+            title,
+            type1,
+            type2,
+            ability1,
+            ability2,
+            ability3,
+            hiddenAbility1,
+            hiddenAbility2,
+            hiddenAbility3,
+            hp,
+            attack,
+            defense,
+            spAttack,
+            spDefense,
+            speed,
+            total,
+        ] = data;
+    
+        this.setNumber(number);
+        this.setName(name);
+        this.setTitle(title);
+        this.setImage(`.\\imgs\\${name}.png`);
+        this.setTypes([type1, type2]);
+        if (![ability1, ability2, ability3].every(ability => ability === 'NULL')) {
+            this.setAbilities([ability1, ability2, ability3]);
+        };
+    
+        if (![hiddenAbility1, hiddenAbility2, hiddenAbility3].every(ability => ability === 'NULL')) {
+            this.setHiddenAbilities([hiddenAbility1, hiddenAbility2, hiddenAbility3]);
+        };
+        this.setHP(hp);
+        this.setAttack(attack);
+        this.setDefense(defense);
+        this.setSpAttack(spAttack);
+        this.setSpDefense(spDefense);
+        this.setSpeed(speed);
+        this.setTotal(total);
+    
+        this.setPokedexEntry();
+    
+        this.hasMegaForm = await eel.check_if_has_mega_form(number)();
+        this.hasAlolanForm = await eel.check_if_has_alolan_form(number)();
+        this.hasAlternateForm = await eel.check_if_has_alternate_form(number)();
+        
+        this.toggleMegaFormSwitchActivity();
+        this.toggleAlolanFormSwitchActivity();
+        this.toggleAlternateFormButtonActivity();
+    
+        if (!this.hasAlternateForm && this.formList.getHtmlElement().classList.contains("OpenFormList") ) {
 
-    if (res) {
-        loadData(res, pokedex);
+            this.formList.toggleVisibility;
+            
+            return;
+        };
+    
+        getAlternateFormData(number, this);
+
     };
+
+    async searchByNumber(number) {
+        const res =  await eel.search_by_number(number)();
+        this.updatePokemonData(res);
+    };
+
+    async searchByName(name) {
+        this.searchInputClear();
+        const res = await eel.search_by_name(name)();
+    
+        if (res) {
+            this.updatePokemonData(res);
+        };
+    };
+};
+
+class Button {
+    constructor(htmlElement, onClickFunction) {
+        this.htmlElement = htmlElement;
+        this.onClickFunction = onClickFunction;
+
+        this.htmlElement.addEventListener('click', () => onClickFunction())
+    };
+;}
+
+class Display {
+    constructor(htmlElement, visibilityShowClass, visibilityHideClass) {
+        this.htmlElement = htmlElement;
+        this.visibility = false;
+        this.visibilityShowClass = visibilityShowClass;
+        this.visibilityHideClass = visibilityHideClass;
+    };
+
+    getHtmlElement() {
+        return this.htmlElement;
+    };
+
+    getVisibility() {
+        return this.visibility;
+    };
+
+    toggleVisibility() {
+        if (this.visibility === false) {
+            this.visibility = true;
+        } else {
+            this.visibility = false;
+        };
+        this.htmlElement.classList.toggle(this.visibilityShowClass);
+        this.htmlElement.classList.toggle(this.visibilityHideClass);
+    };
+
 };
 
 async function getMegaFormData(number, pokedex) {
     const res = await eel.get_mega_form(number)();
-    loadData(res, pokedex);
+
+    pokedex.updatePokemonData(res);
 };
 
 async function getAlolanFormData(number, pokedex) {
     const res = await eel.get_alolan_form(number)();
-    loadData(res, pokedex);
+    pokedex.updatePokemonData(res);
 };
 
 async function getAlternateFormData(number, pokedex) {
@@ -345,66 +447,6 @@ async function loadAlternateFormData(formName, pokedex) {
     pokedex.setTotal(total);
 };
 
-async function loadData(res, pokedex) {
-    
-    const [
-        number,
-        name,
-        title,
-        type1,
-        type2,
-        ability1,
-        ability2,
-        ability3,
-        hiddenAbility1,
-        hiddenAbility2,
-        hiddenAbility3,
-        hp,
-        attack,
-        defense,
-        spAttack,
-        spDefense,
-        speed,
-        total,
-    ] = res;
-
-    pokedex.setNumber(number);
-    pokedex.setName(name);
-    pokedex.setTitle(title);
-    pokedex.setImage(`.\\imgs\\${name}.png`);
-    pokedex.setTypes([type1, type2]);
-    pokedex.setAbilities([ability1, ability2, ability3]);
-    pokedex.setHiddenAbilities([hiddenAbility1, hiddenAbility2, hiddenAbility3]);
-    pokedex.setHP(hp);
-    pokedex.setAttack(attack);
-    pokedex.setDefense(defense);
-    pokedex.setSpAttack(spAttack);
-    pokedex.setSpDefense(spDefense);
-    pokedex.setSpeed(speed);
-    pokedex.setTotal(total);
-
-    const randomPokedexEntry = await eel.get_pokedex_entry(number)();
-    pokedex.setPokedexEntry(randomPokedexEntry);
-
-    pokedex.hasMegaForm = await eel.check_if_has_mega_form(number)();
-    pokedex.hasAlolanForm = await eel.check_if_has_alolan_form(number)();
-    pokedex.hasAlternateForm = await eel.check_if_has_alternate_form(number)();
-    
-    pokedex.toggleMegaFormSwitchActivity();
-    pokedex.toggleAlolanFormSwitchActivity();
-    pokedex.toggleAlternateFormButtonActivity();
-
-    if (!pokedex.hasAlternateForm && pokedex.formList.classList.contains("OpenFormList") ) {
-        toggleFormList(pokedex);
-        
-        return pokedex;
-    };
-
-    getAlternateFormData(number, pokedex);
-
-    return pokedex;
-};
-
 function rotatePlus(pokedex, megaSwitch, alolanSwitch) {
     let nextNumber = pokedex.getNumber() + 1;
 
@@ -412,7 +454,7 @@ function rotatePlus(pokedex, megaSwitch, alolanSwitch) {
         nextNumber = 1;
     };
 
-    searchByNumber(nextNumber, pokedex);
+    pokedex.searchByNumber(nextNumber);
     megaSwitch.checked = false;
     alolanSwitch.checked = false;
     pokedex.setRightButtonAsPressed();
@@ -425,21 +467,11 @@ function rotateMinus(pokedex, megaSwitch, alolanSwitch) {
         nextNumber = 809;
     };
 
-    searchByNumber(nextNumber, pokedex);
+    pokedex.searchByNumber(nextNumber);
     megaSwitch.checked = false;
     alolanSwitch.checked = false;
     pokedex.setLeftButtonAsPressed();
 };
-
-function toggleStatsWindow(pokedex) {   
-    pokedex.detailsWindow.classList.toggle('Open');
-    pokedex.detailsWindow.classList.toggle('Close');
-};
-
-function toggleFormList(pokedex) {
-    pokedex.formList.classList.toggle('OpenFormList');
-    pokedex.formList.classList.toggle('CloseFormList');
-}
 
 const pokedex = window.onload = function () {
     const pokedex = new Pokedex();
@@ -456,7 +488,7 @@ const pokedex = window.onload = function () {
         if (megaSwitch.checked) {
             getMegaFormData(pokedex.getNumber(), pokedex);
         } else {
-            searchByNumber(pokedex.getNumber(), pokedex);
+            pokedex.searchByNumber(pokedex.getNumber());
         };
     });
 
@@ -464,20 +496,20 @@ const pokedex = window.onload = function () {
         if (alolanSwitch.checked) {
             getAlolanFormData(pokedex.getNumber(), pokedex);
         } else {
-            searchByNumber(pokedex.getNumber(), pokedex);
+            pokedex.searchByNumber(pokedex.getNumber());
         };
     });
 
     rightButton.addEventListener('click', () => rotatePlus(pokedex, megaSwitch, alolanSwitch));
     leftButton.addEventListener('click', () => rotateMinus(pokedex, megaSwitch, alolanSwitch));
-    searchButton.addEventListener('click', () => searchByName(pokedex.getSearchInputValue(),pokedex));
-    statusButton.addEventListener('click', () => toggleStatsWindow(pokedex));
-    formsButton.addEventListener('click', () => toggleFormList(pokedex));
+    searchButton.addEventListener('click', () => pokedex.searchByName(pokedex.getSearchInputValue(),pokedex));
+    statusButton.addEventListener('click', () => pokedex.detailsWindow.toggleVisibility());
+    formsButton.addEventListener('click', () => pokedex.formList.toggleVisibility());
     
     document.addEventListener('keydown', (event) => {
         const keyName = event.key;
         if (keyName == "Enter") {
-            searchByName(pokedex.getSearchInputValue(),pokedex);
+            pokedex.searchByName(pokedex.getSearchInputValue(),pokedex);
         } else if (keyName == "ArrowLeft") {
             rotateMinus(pokedex, megaSwitch, alolanSwitch);
         } else if (keyName == "ArrowRight") {
@@ -485,7 +517,7 @@ const pokedex = window.onload = function () {
         };
       });
 
-    searchByNumber(1, pokedex);
+    pokedex.searchByNumber(1);
 
     return pokedex;
 };
