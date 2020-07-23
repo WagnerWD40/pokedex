@@ -3,20 +3,46 @@
     <head>
         <meta charset="UTF-8">
         <title>PokeDex</title>
-        <script type="text/javascript" src=".\js\newMain.js"></script>
+        <script src="gsap/gsap.min.js"></script>
+        <script type="module" src='./js/Slider.mjs'></script>
+        <script type="module" src='./js/Display.mjs'></script>
+        <script type="module" src='./js/Button.mjs'></script>
+        <script type="module" src='./js/Pokedex.mjs'></script>
+        <script defer type="module" src=".\js\newMain.mjs"></script>
         <script type="text/javascript" src="/eel.js"></script>
         <link rel="stylesheet" type="text/css" href=".\style\newMain.css">
         <link rel="stylesheet" type="text/css" href="\style\main.css?<?php echo date('l jS \of F Y h:i:s A'); ?>">
     </head>
     <body>
         <div class="Background">
-            <div class="Container">
+
+            <div class="Form-Window">
+                <ul>
+                    <li>
+                        <input type="radio" name="form1" />
+                        <span>Form 1</span>
+                    </li>
+                    <li>
+                        <input type="radio" name="form1" />
+                        <span>Form 1</span>
+                    </li>
+                    <li>
+                        <input type="radio" name="form1" />
+                        <span>Form 1</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="Main-Window">
                 <div class="InfoBlock">
                     <div class="Info InfoName">
                         <h1 class="PokemonName">Bulbasaur</h1>
                     </div>
                     <div class="Info InfoImage">
                         <img class="PokemonImage" src=".\imgs\Bulbasaur.png"/>
+                        <div>
+                            <img id="PokeballBackgroundTop" src=".\images\pokeball-icon.png"/>
+                            <img id="PokeballBackgroundBottom" src=".\images\pokeball-icon.png"/>
+                        </div>
                     </div>
                     <div class="Info InfoTitle">
                         <h1 class="PokemonNumber">#001</h1>
@@ -49,8 +75,8 @@
                 </div>
                 
             </div>
-            <div class="InfoBlock Details Close">
-                <div class="Info Stats">
+            <div class="Details-Window">
+                <div class="Info Stats InfoBlock">
                     <div class="StatsTitle">
                         <h1 class="StatsTitleTitle">Status</h1>
                     </div>
@@ -146,22 +172,7 @@
                     </div>
                 </div>
             </div>
-            <div class="FormList CloseFormList">
-                <ul>
-                    <li>
-                        <input type="radio" name="form1" />
-                        <span>Form 1</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="form1" />
-                        <span>Form 1</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="form1" />
-                        <span>Form 1</span>
-                    </li>
-                </ul>
-            </div>
+
 
         </div>
 

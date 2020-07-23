@@ -1,3 +1,7 @@
+import Slider from './Slider.mjs';
+import Button from './Button.mjs';
+import Display from './Display.mjs';
+
 class Pokedex {
     constructor() {
         // constants
@@ -35,19 +39,19 @@ class Pokedex {
 
         this.searchInput = document.querySelector(".SearchInput");
 
-        this.detailsWindow = new Display(document.querySelector(".Details"), 'Open', 'Close');
+        this.detailsWindow = new Display(document.querySelector(".Details-Window"));
 
-        this.formList = new Display(document.querySelector(".FormList"), "OpenFormList", "CloseFormList");
+        this.formList = new Display(document.querySelector(".Form-Window"));
 
         this.megaFormSwitch = document.querySelector("#switch-shadow-mega");
         this.alolanFormSwitch = document.querySelector("#switch-shadow-alolan");
 
         // Buttons
-        this.buttonAlternativeForms = new Button(document.querySelector(".FormsButton"), this.formList.toggleVisibility);
-        this.buttonLeft = new Button(document.querySelector(".LeftButton"), () => rotateMinus(this, this.megaSwitch, this.alolanSwitch));
-        this.buttonRight = new Button(document.querySelector(".RightButton"), () => rotatePlus(this, this.megaSwitch, this.alolanSwitch));
-        this.buttonSearch = new Button(document.querySelector(".SearchButton"), () => this.searchByName(() => this.getSearchInputValue()));
-        this.buttonStatus = new Button(document.querySelector(".StatusButton"), () => this.detailsWindow.toggleVisibility());
+        this.buttonAlternativeForms = new Button(document.querySelector(".FormsButton"), "click", this.formList.toggleVisibility);
+        this.buttonLeft = new Button(document.querySelector(".LeftButton"), "click", () => this.rotateMinus());
+        this.buttonRight = new Button(document.querySelector(".RightButton"), "click", () => this.rotatePlus());
+        this.buttonSearch = new Button(document.querySelector(".SearchButton"), "click", () => this.searchByName(() => this.getSearchInputValue()));
+        this.buttonStatus = new Button(document.querySelector(".StatusButton"), "click", () => this.detailsWindow.toggleVisibility());
 
     };
 
@@ -175,7 +179,7 @@ class Pokedex {
                 const input = document.createElement("input");
                 input.type = "radio";
                 input.name = "form";
-                input.onclick = () => loadAlternateFormData(item[1], this);
+                input.onclick = () => this.loadAlternateFormData(item[1], this);
                 
                 const span = document.createElement("span");
                 const spanContent = document.createTextNode(formName);
@@ -324,7 +328,7 @@ class Pokedex {
             return;
         };
     
-        getAlternateFormData(number, this);
+        this.getAlternateFormData(number);
 
     };
 
@@ -352,178 +356,68 @@ class Pokedex {
         };
     };
 
-};
-
-class Button {
-    constructor(htmlElement, onClickFunction) {
-        this.htmlElement = htmlElement;
-        this.onClickFunction = onClickFunction;
-
-        this.htmlElement.addEventListener('click', () => onClickFunction())
-    };
-
-    setDisabled(boolean) {
-        this.htmlElement.disabled = boolean;
-    };
-
-;}
-
-class Display {
-    constructor(htmlElement, visibilityShowClass, visibilityHideClass) {
-        this.htmlElement = htmlElement;
-        this.visibility = false;
-        this.visibilityShowClass = visibilityShowClass;
-        this.visibilityHideClass = visibilityHideClass;
-    };
-
-    getHtmlElement() {
-        return this.htmlElement;
-    };
-
-    getVisibility() {
-        return this.visibility;
-    };
-
-    toggleVisibility = () => {
-        if (this.visibility === false) {
-            this.visibility = true;
-        } else {
-            this.visibility = false;
-        };
-        this.htmlElement.classList.toggle(this.visibilityShowClass);
-        this.htmlElement.classList.toggle(this.visibilityHideClass);
-    };
-
-};
-
-async function getMegaFormData(number, pokedex) {
-    const res = await eel.get_mega_form(number)();
-
-    pokedex.updatePokemonData(res);
-};
-
-async function getAlolanFormData(number, pokedex) {
-    const res = await eel.get_alolan_form(number)();
-    pokedex.updatePokemonData(res);
-};
-
-async function getAlternateFormData(number, pokedex) {
-    const res = await eel.get_alternate_forms(number)();
-    pokedex.populateFormList(res);
-
-    return res ? true : false;
-};
-
-async function loadAlternateFormData(formName, pokedex) {
-
-    const res = await eel.get_specific_alternate_form(formName)();
-
-    const [
-        number,
-        name,
-        title,
-        type1,
-        type2,
-        ability1,
-        ability2,
-        ability3,
-        hiddenAbility1,
-        hiddenAbility2,
-        hiddenAbility3,
-        hp,
-        attack,
-        defense,
-        spAttack,
-        spDefense,
-        speed,
-        total,
-    ] = res;
-
-    console.log(name);
-
-    pokedex.setNumber(number);
-    pokedex.setTitle(title);
-    pokedex.setImage(`.\\imgs\\${name}.png`);
-    pokedex.setTypes([type1, type2]);
-
-    if (![ability1, ability2, ability3].every(ability => ability === 'NULL')) {
-        pokedex.setAbilities([ability1, ability2, ability3]);
-    };
-
-    if (![hiddenAbility1, hiddenAbility2, hiddenAbility3].every(ability => ability === 'NULL')) {
-        pokedex.setHiddenAbilities([hiddenAbility1, hiddenAbility2, hiddenAbility3]);
+    async getMegaFormData(number) {
+        const res = await eel.get_mega_form(number)();
+    
+        this.updatePokemonData(res);
     };
     
-    pokedex.setHP(hp);
-    pokedex.setAttack(attack);
-    pokedex.setDefense(defense);
-    pokedex.setSpAttack(spAttack);
-    pokedex.setSpDefense(spDefense);
-    pokedex.setSpeed(speed);
-    pokedex.setTotal(total);
-};
-
-function rotatePlus(pokedex, megaSwitch, alolanSwitch) {
-    let nextNumber = pokedex.getNumber() + 1;
-
-    if (nextNumber > 809) {
-        nextNumber = 1;
+    async getAlolanFormData(number) {
+        const res = await eel.get_alolan_form(number)();
+        this.updatePokemonData(res);
     };
-
-    pokedex.searchByNumber(nextNumber);
-    megaSwitch.checked = false;
-    alolanSwitch.checked = false;
-    pokedex.setRightButtonAsPressed();
-};
-
-function rotateMinus(pokedex, megaSwitch, alolanSwitch) {
-    let nextNumber = pokedex.getNumber() - 1;
-
-    if (nextNumber < 1) {
-        nextNumber = 809;
-    };
-
-    pokedex.searchByNumber(nextNumber);
-    megaSwitch.checked = false;
-    alolanSwitch.checked = false;
-    pokedex.setLeftButtonAsPressed();
-};
-
-const pokedex = window.onload = function () {
-    const pokedex = new Pokedex();
-
-    const megaSwitch = document.querySelector("#switch-shadow-mega");
-    const alolanSwitch = document.querySelector("#switch-shadow-alolan");
-
-    megaSwitch.addEventListener('change', () => {
-        if (megaSwitch.checked) {
-            getMegaFormData(pokedex.getNumber(), pokedex);
-        } else {
-            pokedex.searchByNumber(pokedex.getNumber());
-        };
-    });
-
-    alolanSwitch.addEventListener('change', () => {
-        if (alolanSwitch.checked) {
-            getAlolanFormData(pokedex.getNumber(), pokedex);
-        } else {
-            pokedex.searchByNumber(pokedex.getNumber());
-        };
-    });
     
-    document.addEventListener('keydown', (event) => {
-        const keyName = event.key;
-        if (keyName == "Enter") {
-            pokedex.searchByName(pokedex.getSearchInputValue(),pokedex);
-        } else if (keyName == "ArrowLeft") {
-            rotateMinus(pokedex, megaSwitch, alolanSwitch);
-        } else if (keyName == "ArrowRight") {
-            rotatePlus(pokedex, megaSwitch, alolanSwitch);
+    async getAlternateFormData(number) {
+        const res = await eel.get_alternate_forms(number)();
+        this.populateFormList(res);
+    
+        return res ? true : false;
+    };
+
+    async loadAlternateFormData(formName) {
+        const res = await eel.get_specific_alternate_form(formName)();
+        this.updatePokemonData(res);
+    };
+
+    rotatePlus() {
+        let nextNumber = this.getNumber() + 1;
+    
+        if (nextNumber > 809) {
+            nextNumber = 1;
         };
-      });
 
-    pokedex.searchByNumber(1);
+        gsap.from(this.image, {
+            opacity: 0.7, 
+            x: 200, 
+            duration: .5,
+          });
+    
+        this.searchByNumber(nextNumber);
+        this.megaSwitch.checked = false;
+        this.alolanSwitch.checked = false;
+        this.setRightButtonAsPressed();
+    };
 
-    return pokedex;
+    rotateMinus() {
+        let nextNumber = this.getNumber() - 1;
+    
+        if (nextNumber < 1) {
+            nextNumber = 809;
+        };
+
+        gsap.from(this.image, {
+            opacity: 0.7, 
+            x: -200, 
+            duration: .5,
+          });
+    
+        this.searchByNumber(nextNumber);
+        this.megaSwitch.checked = false;
+        this.alolanSwitch.checked = false;
+        this.setLeftButtonAsPressed();
+    };
+
+    
 };
 
+export default Pokedex;
