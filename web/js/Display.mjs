@@ -1,6 +1,7 @@
 class Display {
-    constructor(htmlElement) {
+    constructor(htmlElement, slideDistance) {
         this.htmlElement = htmlElement;
+        this.slideDistance = slideDistance;
         this.visibility = false;
     };
 
@@ -12,16 +13,15 @@ class Display {
         return this.visibility;
     };
 
-    toggleVisibility = () => {
-        if (this.visibility === false) {
+    toggleVisibility() {
+        if (!this.visibility) {
             this.visibility = true;
-            gsap.to(this.htmlElement, {x: 535, duration: 1});
+            gsap.to(this.htmlElement, {x: this.slideDistance, duration: 1});
         } else {
             this.visibility = false;
             gsap.to(this.htmlElement, {x: 0, duration: 1});
         };
     };
-
 };
 
 export default Display;

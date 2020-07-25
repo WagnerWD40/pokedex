@@ -1,31 +1,5 @@
 import Pokedex from './Pokedex.mjs';
 
-function rotatePlus(pokedex, megaSwitch, alolanSwitch) {
-    let nextNumber = pokedex.getNumber() + 1;
-
-    if (nextNumber > 809) {
-        nextNumber = 1;
-    };
-
-    pokedex.searchByNumber(nextNumber);
-    megaSwitch.checked = false;
-    alolanSwitch.checked = false;
-    pokedex.setRightButtonAsPressed();
-};
-
-function rotateMinus(pokedex, megaSwitch, alolanSwitch) {
-    let nextNumber = pokedex.getNumber() - 1;
-
-    if (nextNumber < 1) {
-        nextNumber = 809;
-    };
-
-    pokedex.searchByNumber(nextNumber);
-    megaSwitch.checked = false;
-    alolanSwitch.checked = false;
-    pokedex.setLeftButtonAsPressed();
-};
-
 const pokedex = new Pokedex();
 
 const megaSwitch = document.querySelector("#switch-shadow-mega");
@@ -52,9 +26,9 @@ document.addEventListener('keydown', (event) => {
     if (keyName == "Enter") {
         pokedex.searchByName(pokedex.getSearchInputValue(),pokedex);
     } else if (keyName == "ArrowLeft") {
-        rotateMinus(pokedex, megaSwitch, alolanSwitch);
+        pokedex.rotateMinus();
     } else if (keyName == "ArrowRight") {
-        rotatePlus(pokedex, megaSwitch, alolanSwitch);
+        pokedex.rotatePlus();
     };
   });
 

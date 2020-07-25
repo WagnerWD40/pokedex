@@ -1,6 +1,8 @@
 import Slider from './Slider.mjs';
 import Button from './Button.mjs';
+import MainButton from './MainButton.mjs';
 import Display from './Display.mjs';
+import FormWindow from './FormWindow.mjs';
 
 class Pokedex {
     constructor() {
@@ -39,17 +41,17 @@ class Pokedex {
 
         this.searchInput = document.querySelector(".SearchInput");
 
-        this.detailsWindow = new Display(document.querySelector(".Details-Window"));
+        this.detailsWindow = new Display(document.querySelector(".Details-Window"), 535);
 
-        this.formList = new Display(document.querySelector(".Form-Window"));
+        this.formWindow = new FormWindow(document.querySelector(".Form-Window"), -230);
 
         this.megaFormSwitch = document.querySelector("#switch-shadow-mega");
         this.alolanFormSwitch = document.querySelector("#switch-shadow-alolan");
 
         // Buttons
-        this.buttonAlternativeForms = new Button(document.querySelector(".FormsButton"), "click", this.formList.toggleVisibility);
-        this.buttonLeft = new Button(document.querySelector(".LeftButton"), "click", () => this.rotateMinus());
-        this.buttonRight = new Button(document.querySelector(".RightButton"), "click", () => this.rotatePlus());
+        this.buttonAlternativeForms = new Button(document.querySelector(".FormsButton"), "click", () => this.formWindow.toggleVisibility());
+        this.buttonLeft = new MainButton(document.querySelector(".LeftButton"), "click", () => this.rotateMinus());
+        this.buttonRight = new MainButton(document.querySelector(".RightButton"), "click", () => this.rotatePlus());
         this.buttonSearch = new Button(document.querySelector(".SearchButton"), "click", () => this.searchByName(() => this.getSearchInputValue()));
         this.buttonStatus = new Button(document.querySelector(".StatusButton"), "click", () => this.detailsWindow.toggleVisibility());
 
@@ -160,11 +162,11 @@ class Pokedex {
             <span>Form 1</span>
         </li>
 
-        for each item in formsArray and append it to formList
+        for each item in formsArray and append it to formWindow
         */
 
-        while(this.formList.getHtmlElement().hasChildNodes()) {
-            this.formList.getHtmlElement().removeChild(this.formList.getHtmlElement().childNodes[0]);
+        while(this.formWindow.getHtmlElement().hasChildNodes()) {
+            this.formWindow.getHtmlElement().removeChild(this.formWindow.getHtmlElement().childNodes[0]);
         };
 
         if (formsArray) {
@@ -207,7 +209,7 @@ class Pokedex {
 
         ul.appendChild(li);
 
-        this.formList.getHtmlElement().appendChild(ul);
+        this.formWindow.getHtmlElement().appendChild(ul);
        };
         
     };
@@ -257,13 +259,13 @@ class Pokedex {
             attributeBar.style.width = `${barSize}%`;
 
             if (barSize >= this.maxAttributeValue / 4) {
-                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(124, 255, 227) 0%, rgb(16, 224, 44) 100%)';
+                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(16, 224, 44) 0%, rgb(124, 255, 227) 100%)';
             } else if (barSize >= this.maxAttributeValue / 5 && barSize < this.maxAttributeValue / 4) {
-                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(201, 253, 152) 0%, rgb(220, 224, 16) 100%)';
+                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(220, 224, 16) 0%, rgb(201, 253, 152) 100%)';
             } else if (barSize >= this.maxAttributeValue / 7 && barSize < this.maxAttributeValue / 5) {
-                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(255, 254, 172) 0%, rgb(255, 230, 4) 100%)';
+                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(232, 206, 79) 0%, rgb(255, 230, 4) 100%)';
             } else {
-                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(253, 209, 152) 0%, rgb(224, 23, 16) 100%)';
+                attributeBar.style.backgroundImage = 'linear-gradient(to right, rgb(143, 75, 49) 0%, rgb(224, 23, 16) 100%)';
             };
         };
     };
@@ -320,13 +322,6 @@ class Pokedex {
         this.toggleMegaFormSwitchActivity();
         this.toggleAlolanFormSwitchActivity();
         this.toggleAlternateFormButtonActivity();
-    
-        if (!this.hasAlternateForm && this.formList.getHtmlElement().classList.contains("OpenFormList") ) {
-
-            this.formList.toggleVisibility;
-            
-            return;
-        };
     
         this.getAlternateFormData(number);
 
@@ -391,6 +386,10 @@ class Pokedex {
             x: 200, 
             duration: .5,
           });
+
+        if (this.formWindow.getVisibility()) {
+            this.formWindow.toggleVisibility();
+        };
     
         this.searchByNumber(nextNumber);
         this.megaSwitch.checked = false;
@@ -410,6 +409,10 @@ class Pokedex {
             x: -200, 
             duration: .5,
           });
+
+        if (this.formWindow.getVisibility()) {
+            this.formWindow.toggleVisibility();
+        };
     
         this.searchByNumber(nextNumber);
         this.megaSwitch.checked = false;
