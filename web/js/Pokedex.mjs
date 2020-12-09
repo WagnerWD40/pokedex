@@ -392,8 +392,8 @@ class Pokedex {
         };
     
         this.searchByNumber(nextNumber);
-        this.megaSwitch.checked = false;
-        this.alolanSwitch.checked = false;
+        this.megaFormSwitch.checked = false;
+        this.alolanFormSwitch.checked = false;
         this.setRightButtonAsPressed();
     };
 
@@ -415,8 +415,8 @@ class Pokedex {
         };
     
         this.searchByNumber(nextNumber);
-        this.megaSwitch.checked = false;
-        this.alolanSwitch.checked = false;
+        this.megaFormSwitch.checked = false;
+        this.alolanFormSwitch.checked = false;
         this.setLeftButtonAsPressed();
     };
 

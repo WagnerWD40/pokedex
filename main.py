@@ -183,7 +183,7 @@ def get_ability_description(ability):
     return list(cursor.fetchone())
 
 
-eel.start('newMain.html', size=(1600, 1000), mode='chrome-app', options={'chromeFlags': ['--disable-http-cache']})
+eel.start('index.html', size=(1600, 1000), mode='chrome-app', options={'chromeFlags': ['--disable-http-cache']})
 
 
 connection.close()

@@ -523,10 +523,11 @@ STATUS DISPLAY
 }
 
 .BarBackground {
-    background: linear-gradient(to bottom, #4fe6fd, #0dadec);
+    position: relative;
+    background: linear-gradient(to bottom, #e5e7e7, #4ac3f3);
     width: 100%;
     height: 80%;
-    border-radius: 16px;
+    border-radius: 50px;
 }
 
 .Bar {
@@ -534,8 +535,19 @@ STATUS DISPLAY
     background-size: 100%;
     width: 80%;
     height: 100%;
-    border-radius: 16px;
+    border-radius: 50px;
     transition: .3s ease all;
+}
+
+.BarBackground::after {
+    content: "";
+    position: absolute;
+    background-image: linear-gradient(to top, rgb(102, 102, 102) 0%, transparent 40%, transparent 100%);
+    top: 0;
+    left: 0 ;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
 }
 
 /*
